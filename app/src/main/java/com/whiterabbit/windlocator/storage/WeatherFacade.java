@@ -45,7 +45,7 @@ public class WeatherFacade {
                 mLocationProvider.getUpdatedLocation(request)
                         .first()
                         .flatMap(location -> mRestClient.getNearbyWeather(location.getLatitude(), location.getLongitude()));
-        
+
         observable.subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .subscribe(n -> {
