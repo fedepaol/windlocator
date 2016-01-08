@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@null"
+        android:paddingTop="@dimen/margin_med_large"
+        android:paddingBottom="@dimen/margin_med_large"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/time_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <TextView style="@style/WeatherTime"
+        android:text="04:30PM"
+        android:id="@+id/time" />
+    <com.whiterabbit.windlocator.views.PreferredImageView
+        android:id="@+id/weather_list_preferred"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/star_not_selected" />
+   </LinearLayout>
+
+    <TextView style="@style/WeatherCityName"
+        android:layout_alignLeft="@id/time_container"
+        android:layout_below="@id/time_container"
+        android:text="New York"
+        android:id="@+id/city_name" />
+    <LinearLayout
+        android:layout_below="@id/city_name"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/weather_icon"
+            style="@style/WeatherIcon"
+            android:src="@drawable/cloudy_small" />
+        <TextView style="@style/WeatherDetail"
+            android:text="Cloudy"
+            android:id="@+id/weather_description" />
+        <ImageView
+            style="@style/WeatherIcon"
+            android:src="@drawable/temperature_small"/>
+        <TextView style="@style/WeatherDetail"
+            android:text="23C"
+            android:id="@+id/temperature" />
+        <ImageView
+            style="@style/WeatherIcon"
+            android:src="@drawable/wind_direction_small"/>
+        <TextView style="@style/WeatherDetail"
+            android:text="South East"
+            android:layout_height="wrap_content"
+            android:id="@+id/wind_direction" />
+    </LinearLayout>
+    <TextView style="@style/WindSpeed"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:text="17"
+        android:id="@+id/wind_speed"/>
+    <ImageView style="@style/WeatherIcon"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/margin_small"
+        android:layout_toLeftOf="@id/wind_speed"
+        android:src="@drawable/wind_large" />
+    <TextView style="@style/WeatherTime"
+        android:layout_below="@id/wind_speed"
+        android:layout_alignRight="@id/wind_speed"
+        android:text="Km/h" />
+</RelativeLayout>

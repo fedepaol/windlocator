@@ -1,0 +1,165 @@
+package com.whiterabbit.windlocator.rest;
+
+import com.whiterabbit.windlocator.R;
+
+/**
+ * Created by fedepaol on 19/08/15.
+ */
+public class WeatherCodes {
+    private WeatherCodes() {
+
+    }
+
+    public static int getWeatherDescFromId(long id) {
+        int myId = (int) id;
+        switch(myId) {
+            case 200:
+                return R.string.thunderstorm_with_light_rain;
+            case 201:
+                return R.string.thunderstorm_with_rain;
+            case 202:
+                return R.string.thunderstorm_with_heavy_rain;
+            case 210:
+                return R.string.light_thunderstorm;
+            case 211:
+                return R.string.thunderstorm;
+            case 212:
+                return R.string.heavy_thunderstorm;
+            case 221:
+                return R.string.ragged_thunderstorm;
+            case 230:
+                return R.string.thunderstorm_with_light_drizzle;
+            case 231:
+                return R.string.thunderstorm_with_drizzle;
+            case 232:
+                return R.string.thunderstorm_with_heavy_drizzle;
+            case 300:
+                return R.string.light_intensity_drizzle;
+            case 301:
+                return R.string.drizzle;
+            case 302:
+                return R.string.heavy_intensity_drizzle;
+            case 310:
+                return R.string.light_intensity_drizzle_rain;
+            case 311:
+                return R.string.drizzle_rain;
+            case 312:
+                return R.string.heavy_intensity_drizzle_rain;
+            case 313:
+                return R.string.shower_rain_and_drizzle;
+            case 314:
+                return R.string.heavy_shower_rain_and_drizzle;
+            case 321:
+                return R.string.shower_drizzle;
+            case 500:
+                return R.string.light_rain;
+            case 501:
+                return R.string.moderate_rain;
+            case 502:
+                return R.string.heavy_intensity_rain;
+            case 503:
+                return R.string.very_heavy_rain;
+            case 504:
+                return R.string.extreme_rain;
+            case 511:
+                return R.string.freezing_rain;
+            case 520:
+                return R.string.light_intensity_shower_rain;
+            case 521:
+                return R.string.shower_rain;
+            case 522:
+                return R.string.heavy_intensity_shower_rain;
+            case 531:
+                return R.string.ragged_shower_rain;
+            case 600:
+                return R.string.light_snow;
+            case 601:
+                return R.string.snow;
+            case 602:
+                return R.string.heavy_snow;
+            case 611:
+                return R.string.sleet;
+            case 612:
+                return R.string.shower_sleet;
+            case 615:
+                return R.string.light_rain_and_snow;
+            case 616:
+                return R.string.rain_and_snow;
+            case 620:
+                return R.string.light_shower_snow;
+            case 621:
+                return R.string.shower_snow;
+            case 622:
+                return R.string.heavy_shower_snow;
+            case 701:
+                return R.string.mist;
+            case 711:
+                return R.string.smoke;
+            case 721:
+                return R.string.haze;
+            case 731:
+                return R.string.sand;
+            case 741:
+                return R.string.fog;
+            case 751:
+                return R.string.sand;
+            case 761:
+                return R.string.dust;
+            case 762:
+                return R.string.volcanic_ash;
+            case 771:
+                return R.string.squalls;
+            case 781:
+                return R.string.tornado;
+            case 800:
+                return R.string.clear_sky;
+            case 801:
+                return R.string.few_clouds;
+            case 802:
+                return R.string.scattered_clouds;
+            case 803:
+                return R.string.broken_clouds;
+            case 804:
+                return R.string.overcast_clouds;
+            case 900:
+                return R.string.tornado;
+            case 901:
+                return R.string.tropical_storm;
+            case 902:
+                return R.string.hurricane;
+            case 903:
+                return R.string.cold;
+            case 904:
+                return R.string.hot;
+            case 905:
+                return R.string.windy;
+            case 906:
+                return R.string.hail;
+            case 951:
+                return R.string.calm;
+            case 952:
+                return R.string.light_breeze;
+            case 953:
+                return R.string.gentle_breeze;
+            case 954:
+                return R.string.moderate_breeze;
+            case 955:
+                return R.string.fresh_breeze;
+            case 956:
+                return R.string.strong_breeze;
+            case 957:
+                return R.string.high_wind;
+            case 958:
+                return R.string.gale;
+            case 959:
+                return R.string.severe_gale;
+            case 960:
+                return R.string.storm;
+            case 961:
+                return R.string.violent_storm;
+            case 962:
+                return R.string.hurricane;
+        }
+        return R.string.unknown;
+    }
+}

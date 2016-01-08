@@ -1,0 +1,81 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/light_blue</item>
+        <item name="android:windowBackground">@color/blue</item>
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="AppThemeTabs" parent="AppTheme">
+        <item name="actionBarStyle">@style/MyActionBarTheme</item>
+    </style>
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/dark_blue</item>
+        <item name="tabIndicatorHeight">2dp</item>
+        <item name="tabPaddingStart">12dp</item>
+        <item name="tabPaddingEnd">12dp</item>
+        <item name="tabTextAppearance">@style/MyCustomTabTextAppearance</item>
+        <item name="tabSelectedTextColor">@color/white</item>
+    </style>
+    <style name="MyCustomTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_dark</item>
+        <item name="textAllCaps">true</item>
+    </style>
+
+    <style name="MyActionBarTheme" parent="Base.Widget.AppCompat.Light.ActionBar.Solid">
+        <item name="elevation">0dp</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <!-- List elem -->
+    <style name="WeatherTime">
+        <item name="android:textSize">@dimen/text_size_large</item>
+        <item name="android:textColor">@color/text_dark</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="WeatherDetail">
+        <item name="android:layout_marginRight">@dimen/margin_medium</item>
+        <item name="android:fontFamily">"sans-serif-light"</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+   <style name="WindSpeed">
+        <item name="android:fontFamily">"sans-serif-light"</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_huge</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+    <style name="WeatherCityName">
+        <item name="android:fontFamily">"sans-serif-light"</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_size_xxlarge</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:paddingTop">@dimen/margin_small</item>
+        <item name="android:paddingBottom">@dimen/margin_small</item>
+    </style>
+    <style name="WeatherIcon">
+        <item name="android:layout_marginRight">@dimen/margin_xsmall</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="SearchResDetail">
+        <item name="android:fontFamily">"sans-serif-light"</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="SearchResDetail.First">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+    <style name="SearchResDetail.Second">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+</resources>
