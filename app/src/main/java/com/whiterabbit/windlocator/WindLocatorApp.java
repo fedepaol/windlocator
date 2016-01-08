@@ -14,7 +14,6 @@ public class WindLocatorApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        //enableRxTrack();
         initComponent();
     }
 
@@ -24,8 +23,8 @@ public class WindLocatorApp extends Application {
 
     void initComponent() {
         mComponent = DaggerApplicationComponent.builder()
+                .applicationModule(getApplicationModule())
                 .build();
-
     }
 
     public ApplicationComponent getComponent() {

@@ -1,4 +1,4 @@
-package com.whiterabbit.windlocator.views;
+package com.whiterabbit.windlocator.nearby;
 
 
 import android.content.SharedPreferences;
@@ -12,8 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.whiterabbit.windlocator.R;
-import com.whiterabbit.windlocator.inject.DaggerWeatherListComponent;
-import com.whiterabbit.windlocator.inject.WeatherListModule;
 import com.whiterabbit.windlocator.model.WeatherResults;
 
 import javax.inject.Inject;
@@ -30,7 +28,7 @@ public class NearbyListFragment extends Fragment implements SwipeRefreshLayout.O
     @Bind(R.id.swipe_container) SwipeRefreshLayout mRefreshLayout;
 
     @Inject
-    NearbyPresenterImpl mPresenter;
+    NearbyPresenter mPresenter;
 
     @Inject
     SharedPreferences mShared;
@@ -101,7 +99,11 @@ public class NearbyListFragment extends Fragment implements SwipeRefreshLayout.O
 
     @Override
     public void setProgress(boolean pending) {
-
+        if (pending) {
+            // TODO Show drag progress
+        } else {
+            // TODO stop drag progress
+        }
     }
 
     @Override

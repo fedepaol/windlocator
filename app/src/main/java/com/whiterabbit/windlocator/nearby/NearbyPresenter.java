@@ -1,4 +1,4 @@
-package com.whiterabbit.windlocator.views;
+package com.whiterabbit.windlocator.nearby;
 
 
 public interface NearbyPresenter {

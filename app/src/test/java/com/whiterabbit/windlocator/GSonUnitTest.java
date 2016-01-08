@@ -1,6 +1,7 @@
 package com.whiterabbit.windlocator;
 
 import com.google.gson.Gson;
+import com.whiterabbit.windlocator.inject.ApplicationComponent;
 import com.whiterabbit.windlocator.rest.OpenWeatherClient;
 
 import junit.framework.Assert;
@@ -9,6 +10,8 @@ import com.whiterabbit.windlocator.model.WeatherResults;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.mockito.Mockito.mock;
 
 
 /**
@@ -29,5 +32,6 @@ public class GSonUnitTest {
         Assert.assertEquals(res.getWeathers().length, 2);
         Assert.assertEquals(res.getWeathers()[0].getCityName(), "Shcherbinka");
         Assert.assertEquals(res.getWeathers()[0].getId(), 495260);
+        mock(ApplicationComponent.class);
     }
 }

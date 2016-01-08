@@ -7,7 +7,6 @@ package com.whiterabbit.windlocator.inject;
 import android.content.SharedPreferences;
 
 import com.whiterabbit.windlocator.WindLocatorApp;
-import com.whiterabbit.windlocator.views.NearbyListFragment;
 
 import javax.inject.Singleton;
 

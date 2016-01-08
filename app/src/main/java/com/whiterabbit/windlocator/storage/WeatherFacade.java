@@ -17,11 +17,8 @@ import rx.subjects.BehaviorSubject;
  * Created by paolinelli on 1/8/2016.
  */
 public class WeatherFacade {
-    ReactiveLocationProvider mLocationProvider;
-
-    @Inject
-    OpenWeatherClient mRestClient;
-
+    @Inject ReactiveLocationProvider mLocationProvider;
+    @Inject OpenWeatherClient mRestClient;
     @Inject ObservableDbHelper mDatabase;
 
     @Inject
@@ -39,7 +36,6 @@ public class WeatherFacade {
                 .setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY)
                 .setNumUpdates(1)
                 .setInterval(100);
-
 
         Observable<WeatherResults> observable =
                 mLocationProvider.getUpdatedLocation(request)

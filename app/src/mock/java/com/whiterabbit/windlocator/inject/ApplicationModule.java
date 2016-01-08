@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-
 import com.whiterabbit.windlocator.rest.OpenWeatherClient;
+import com.whiterabbit.windlocator.storage.WeatherDbHelperExt;
 
 import javax.inject.Singleton;
 
@@ -47,5 +47,11 @@ public class ApplicationModule {
     @Singleton
     Context provideContext() {
         return mApp.getApplicationContext();
+    }
+
+    @Provides
+    @Singleton
+    WeatherDbHelperExt provideDbHelper() {
+        return new WeatherDbHelperExt(mApp.getApplicationContext());
     }
 }

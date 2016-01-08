@@ -1,9 +1,9 @@
-package com.whiterabbit.windlocator.inject;
+package com.whiterabbit.windlocator.nearby;
 
 
-import com.whiterabbit.windlocator.views.NearbyPresenter;
-import com.whiterabbit.windlocator.views.NearbyPresenterImpl;
-import com.whiterabbit.windlocator.views.NearbyView;
+import com.whiterabbit.windlocator.nearby.NearbyPresenter;
+import com.whiterabbit.windlocator.nearby.NearbyPresenterImpl;
+import com.whiterabbit.windlocator.nearby.NearbyView;
 
 
 import dagger.Module;

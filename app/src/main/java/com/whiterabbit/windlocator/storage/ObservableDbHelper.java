@@ -1,19 +1,19 @@
 package com.whiterabbit.windlocator.storage;
 
-import android.content.Context;
-
 import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.model.WeatherResults;
+
+import javax.inject.Inject;
 
 import rx.Observable;
 import rx.subjects.PublishSubject;
 
 public class ObservableDbHelper {
     private PublishSubject<WeatherResults> mSubject = PublishSubject.create();
-    private WeatherDbHelperExt mDbHelper;
+    @Inject WeatherDbHelperExt mDbHelper;
 
-    public ObservableDbHelper(Context c) {
-        mDbHelper = new WeatherDbHelperExt(c);
+    @Inject
+    public ObservableDbHelper() {
     }
 
     public Observable<WeatherResults> getNearbyObservable() {

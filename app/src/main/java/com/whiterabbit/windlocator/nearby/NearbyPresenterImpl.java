@@ -1,4 +1,4 @@
-package com.whiterabbit.windlocator.views;
+package com.whiterabbit.windlocator.nearby;
 
 
 import android.util.Log;
@@ -14,14 +14,15 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class NearbyPresenterImpl implements NearbyPresenter {
-    @Inject WeatherFacade mWeatherClient;
+    WeatherFacade mWeatherClient;
     private NearbyView mView;
     private Subscription mDiskSubscription;
     private Subscription mProgressSubscription;
 
     private Observable<WeatherResults> mDiskObservable;
 
-    public NearbyPresenterImpl(NearbyView view) {
+    public NearbyPresenterImpl(NearbyView view, WeatherFacade weather) {
+        mWeatherClient = weather;
         mView = view;
         mDiskObservable = mWeatherClient.getDatabaseObservable();
         mDiskObservable.unsubscribeOn(Schedulers.computation());

@@ -1,11 +1,11 @@
-package com.whiterabbit.windlocator.inject;
+package com.whiterabbit.windlocator.nearby;
 
 /**
  * Created by fedepaol on 28/06/15.
  */
 
 import com.whiterabbit.windlocator.ActivityScope;
-import com.whiterabbit.windlocator.views.NearbyListFragment;
+import com.whiterabbit.windlocator.inject.ApplicationComponent;
 
 
 import dagger.Component;
