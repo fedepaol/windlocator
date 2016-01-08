@@ -25,12 +25,12 @@ import butterknife.ButterKnife;
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-public class NearbyListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, NearbyViewContract {
+public class NearbyListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, NearbyView {
     @Bind(R.id.nearby_list) RecyclerView mRecyclerView;
     @Bind(R.id.swipe_container) SwipeRefreshLayout mRefreshLayout;
 
     @Inject
-    NearbyPresenterContract mPresenter;
+    NearbyPresenterImpl mPresenter;
 
     @Inject
     SharedPreferences mShared;

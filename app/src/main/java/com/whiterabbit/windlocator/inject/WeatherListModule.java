@@ -2,8 +2,8 @@ package com.whiterabbit.windlocator.inject;
 
 
 import com.whiterabbit.windlocator.views.NearbyPresenter;
-import com.whiterabbit.windlocator.views.NearbyPresenterContract;
-import com.whiterabbit.windlocator.views.NearbyViewContract;
+import com.whiterabbit.windlocator.views.NearbyPresenterImpl;
+import com.whiterabbit.windlocator.views.NearbyView;
 
 
 import dagger.Module;
@@ -11,13 +11,13 @@ import dagger.Provides;
 
 @Module
 public class WeatherListModule {
-    private NearbyViewContract mView;
-    public WeatherListModule(NearbyViewContract view) {
+    private NearbyView mView;
+    public WeatherListModule(NearbyView view) {
         mView = view;
     }
 
     @Provides
-    public NearbyPresenterContract provideNearbyPresenter() {
-        return new NearbyPresenter(mView);
+    public NearbyPresenter provideNearbyPresenter() {
+        return new NearbyPresenterImpl(mView);
     }
 }

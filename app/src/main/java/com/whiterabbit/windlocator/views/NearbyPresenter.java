@@ -1,64 +1,10 @@
 package com.whiterabbit.windlocator.views;
 
 
-import android.util.Log;
+public interface NearbyPresenter {
+    void onPause();
 
-import com.whiterabbit.windlocator.model.WeatherResults;
-import com.whiterabbit.windlocator.storage.WeatherFacade;
+    void onResume();
 
-import javax.inject.Inject;
-
-import rx.Observable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-
-public class NearbyPresenter implements NearbyPresenterContract {
-    @Inject WeatherFacade mWeatherClient;
-    private NearbyViewContract mView;
-    private Subscription mDiskSubscription;
-    private Subscription mProgressSubscription;
-
-    private Observable<WeatherResults> mDiskObservable;
-
-    public NearbyPresenter(NearbyViewContract view) {
-        mView = view;
-        mDiskObservable = mWeatherClient.getDatabaseObservable();
-        mDiskObservable.unsubscribeOn(Schedulers.computation());
-    }
-
-    @Override
-    public void onPause() {
-        if (mDiskSubscription != null) {
-            mDiskSubscription.unsubscribe();
-        }
-        if (mProgressSubscription != null) {
-            mProgressSubscription.unsubscribe();
-        }
-    }
-
-    @Override
-    public void onResume() {
-        mDiskSubscription = mDiskObservable.subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread()).subscribe(l -> {
-                                mView.updateWeatherResult(l);
-                            });
-    }
-
-    @Override
-    public void update() {
-        mView.setProgress(true);
-        fetchUpdates();
-    }
-
-    private void fetchUpdates() {
-        Observable<String> progressObservable = mWeatherClient.updateLocalWeather();
-        mProgressSubscription = progressObservable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(s -> {},
-                        e -> { Log.d("RX", "There has been an error");
-                            mView.setProgress(false);
-                        },
-                        () -> mView.setProgress(false));
-    }
+    void update();
 }
