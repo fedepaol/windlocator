@@ -2,6 +2,7 @@ package com.whiterabbit.windlocator.storage;
 
 import android.content.Context;
 
+import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.model.WeatherResults;
 
 import rx.Observable;
@@ -23,5 +24,22 @@ public class ObservableDbHelper {
 
     WeatherResults getLastNearby() {
         return mDbHelper.getLastNearbyWeather();
+    }
+
+    public void insertNearbyWeather(WeatherResults nearby) {
+        Weather[] weathers = nearby.getWeathers();
+        mDbHelper.removeAllNearbyWeather();
+        for (int i = 0; i < weathers.length; i++) {
+            Weather localWeather = weathers[i];
+            mDbHelper.addNearbyWeather(localWeather.getTime(),
+                                        localWeather.getWindSpeed(),
+                                        localWeather.getWindDegree(),
+                                        localWeather.getTemperature(),
+                                        localWeather.getCityName(),
+                                        localWeather.getLatitude(),
+                                        localWeather.getLongitude(),
+                                        localWeather.getWeatherEnum(),
+                                        localWeather.getId());
+        }
     }
 }
