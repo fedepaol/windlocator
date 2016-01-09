@@ -7,15 +7,21 @@ package com.whiterabbit.windlocator.inject;
 import android.content.SharedPreferences;
 
 import com.whiterabbit.windlocator.WindLocatorApp;
+import com.whiterabbit.windlocator.rest.OpenWeatherClient;
+import com.whiterabbit.windlocator.storage.WeatherDbHelperExt;
 
 import javax.inject.Singleton;
 
 import dagger.Component;
+import pl.charmas.android.reactivelocation.ReactiveLocationProvider;
 
 @Singleton
 @Component(modules = {ApplicationModule.class})
 public interface ApplicationComponent {
     void inject(WindLocatorApp app);
     SharedPreferences getSharedPrefs();
+    OpenWeatherClient getOpenWeatherClient();
+    ReactiveLocationProvider getReactiveLocationProvider();
+    WeatherDbHelperExt getDbHelper();
 }
 

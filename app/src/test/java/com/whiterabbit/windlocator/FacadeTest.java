@@ -9,6 +9,7 @@ import org.junit.Before;
  */
 public class FacadeTest {
     private WeatherFacade mFacade;
+
     @Before
     public void setup() {
 

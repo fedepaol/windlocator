@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.whiterabbit.windlocator.R;
+import com.whiterabbit.windlocator.WindLocatorApp;
 import com.whiterabbit.windlocator.model.WeatherResults;
 
 import javax.inject.Inject;
@@ -46,7 +47,10 @@ public class NearbyListFragment extends Fragment implements SwipeRefreshLayout.O
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        WindLocatorApp app = (WindLocatorApp) getActivity().getApplication();
+
         DaggerWeatherListComponent.builder()
+                                  .applicationComponent(app.getComponent())
                                   .weatherListModule(new WeatherListModule(this))
                                   .build().inject(this);
 

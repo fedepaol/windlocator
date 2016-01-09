@@ -1,9 +1,7 @@
 package com.whiterabbit.windlocator.nearby;
 
 
-import com.whiterabbit.windlocator.nearby.NearbyPresenter;
-import com.whiterabbit.windlocator.nearby.NearbyPresenterImpl;
-import com.whiterabbit.windlocator.nearby.NearbyView;
+import com.whiterabbit.windlocator.storage.WeatherFacade;
 
 
 import dagger.Module;
@@ -17,7 +15,12 @@ public class WeatherListModule {
     }
 
     @Provides
-    public NearbyPresenter provideNearbyPresenter() {
-        return new NearbyPresenterImpl(mView);
+    public NearbyView provideNearbyView() {
+        return mView;
+    }
+
+    @Provides
+    public NearbyPresenter provideNearbyPresenter(NearbyView view, WeatherFacade facade) {
+        return new NearbyPresenterImpl(view, facade);
     }
 }
