@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import com.whiterabbit.windlocator.WindLocatorApp;
 import com.whiterabbit.windlocator.rest.OpenWeatherClient;
 import com.whiterabbit.windlocator.storage.WeatherDbHelperExt;
+import com.whiterabbit.windlocator.storage.WeatherFacade;
 
 import javax.inject.Singleton;
 
@@ -23,5 +24,6 @@ public interface ApplicationComponent {
     OpenWeatherClient getOpenWeatherClient();
     ReactiveLocationProvider getReactiveLocationProvider();
     WeatherDbHelperExt getDbHelper();
+    WeatherFacade getFacade();
 }
 

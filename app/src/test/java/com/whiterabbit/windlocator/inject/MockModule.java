@@ -1,11 +1,13 @@
-package com.whiterabbit.windlocator;
+package com.whiterabbit.windlocator.inject;
 
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
+import com.whiterabbit.windlocator.inject.ApplicationModule;
 import com.whiterabbit.windlocator.rest.OpenWeatherClient;
+import com.whiterabbit.windlocator.storage.WeatherDbHelper;
 import com.whiterabbit.windlocator.storage.WeatherDbHelperExt;
 
 import javax.inject.Singleton;
@@ -20,27 +22,34 @@ import static org.mockito.Mockito.mock;
  * Created by fedepaol on 28/06/15.
  */
 @Module
-public class MockModule {
-    @Provides
-    @Singleton
-    OpenWeatherClient provideWeatherClient() {
-        return new OpenWeatherClient();
+public class MockModule extends ApplicationModule {
+
+
+    public MockModule() {
+        super(null);
     }
 
-    @Provides
-    @Singleton
+    @Override
+    SharedPreferences provideSharedPrefs() {
+        return null;
+    }
+
+    @Override
+    OpenWeatherClient provideWeatherClient() {
+        return mock(OpenWeatherClient.class);
+    }
+
+    @Override
     ReactiveLocationProvider provideLocation() {
         return mock(ReactiveLocationProvider.class);
     }
 
-    @Provides
-    @Singleton
+    @Override
     Context provideContext() {
         return mock(Context.class);
     }
 
-    @Provides
-    @Singleton
+    @Override
     WeatherDbHelperExt provideDbHelper() {
         return mock(WeatherDbHelperExt.class);
     }
