@@ -1,12 +1,27 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.whiterabbit.windlocator">
 
+
     <application
+        android:name=".WindLocatorApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
+    <activity
+        android:name=".views.MainActivity"
+        android:theme="@style/AppThemeTabs"
+        android:label="@string/title_activity_main" >
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value=".views.SearchResultActivity" />
+
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
 
     </application>
 

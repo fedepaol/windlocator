@@ -24,7 +24,7 @@ import butterknife.ButterKnife;
  * A simple {@link Fragment} subclass.
  * create an instance of this fragment.
  */
-public class NearbyListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, NearbyView {
+public class NearbyListFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener, NearbyView, WeatherListAdapter.ListElemClick {
     @Bind(R.id.nearby_list) RecyclerView mRecyclerView;
     @Bind(R.id.swipe_container) SwipeRefreshLayout mRefreshLayout;
 
@@ -33,7 +33,7 @@ public class NearbyListFragment extends Fragment implements SwipeRefreshLayout.O
 
     @Inject
     SharedPreferences mShared;
-    //private WeatherListAdapter mAdapter;
+    private WeatherListAdapter mAdapter;
 
     public NearbyListFragment() {
         // Required empty public constructor
@@ -55,7 +55,6 @@ public class NearbyListFragment extends Fragment implements SwipeRefreshLayout.O
                                   .build().inject(this);
 
         setRetainInstance(true);
-        // createObservable();
     }
 
 
@@ -79,26 +78,31 @@ public class NearbyListFragment extends Fragment implements SwipeRefreshLayout.O
 
         mRefreshLayout.setEnabled(true);
         mRefreshLayout.setOnRefreshListener(this);
+        mAdapter = new WeatherListAdapter(this, getActivity().getApplicationContext());
+        mRecyclerView.setAdapter(mAdapter);
         return res;
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        mPresenter.onPause();
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        mPresenter.onResume();
     }
 
     @Override
     public void onRefresh() {
+        mPresenter.update();
     }
 
     @Override
     public void updateWeatherResult(WeatherResults results) {
-
+        mAdapter.updateData(results);
     }
 
     @Override
@@ -112,6 +116,16 @@ public class NearbyListFragment extends Fragment implements SwipeRefreshLayout.O
 
     @Override
     public void goToDetail(long weatherDetail) {
+
+    }
+
+    @Override
+    public void onViewClicked(long id) {
+
+    }
+
+    @Override
+    public void onPreferredClicked(long id) {
 
     }
 }

@@ -6,7 +6,6 @@ import android.util.Log;
 import com.whiterabbit.windlocator.model.WeatherResults;
 import com.whiterabbit.windlocator.storage.WeatherFacade;
 
-import javax.inject.Inject;
 
 import rx.Observable;
 import rx.Subscription;

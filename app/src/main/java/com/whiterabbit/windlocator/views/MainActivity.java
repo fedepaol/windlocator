@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.whiterabbit.windlocator.R;
+import com.whiterabbit.windlocator.nearby.NearbyListFragment;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -104,14 +105,14 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 2;
+            return 1;
         }
 
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                // TODO
                 case 0:
+                    return new NearbyListFragment();
                 case 1:
             }
             return null;

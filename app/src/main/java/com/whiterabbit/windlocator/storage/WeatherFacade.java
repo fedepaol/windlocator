@@ -40,7 +40,8 @@ public class WeatherFacade {
         Observable<WeatherResults> observable =
                 mLocationProvider.getUpdatedLocation(request)
                         .first()
-                        .flatMap(location -> mRestClient.getNearbyWeather(location.getLatitude(), location.getLongitude()));
+                        .flatMap(location -> mRestClient.getNearbyWeather(location.getLatitude(),
+                                                                          location.getLongitude()));
 
         observable.subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())

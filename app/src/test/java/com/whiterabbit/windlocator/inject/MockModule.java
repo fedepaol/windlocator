@@ -1,19 +1,12 @@
 package com.whiterabbit.windlocator.inject;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
-import com.whiterabbit.windlocator.inject.ApplicationModule;
 import com.whiterabbit.windlocator.rest.OpenWeatherClient;
-import com.whiterabbit.windlocator.storage.WeatherDbHelper;
 import com.whiterabbit.windlocator.storage.WeatherDbHelperExt;
 
-import javax.inject.Singleton;
-
 import dagger.Module;
-import dagger.Provides;
 import pl.charmas.android.reactivelocation.ReactiveLocationProvider;
 
 import static org.mockito.Mockito.mock;
@@ -23,10 +16,14 @@ import static org.mockito.Mockito.mock;
  */
 @Module
 public class MockModule extends ApplicationModule {
+    ReactiveLocationProvider mLocationProvider;
+    OpenWeatherClient mWeatherClient;
+    WeatherDbHelperExt mDbHelper;
 
-
-    public MockModule() {
+    public MockModule(OpenWeatherClient c, WeatherDbHelperExt dbHelper) {
         super(null);
+        mWeatherClient = c;
+        mDbHelper = dbHelper;
     }
 
     @Override
@@ -36,12 +33,12 @@ public class MockModule extends ApplicationModule {
 
     @Override
     OpenWeatherClient provideWeatherClient() {
-        return mock(OpenWeatherClient.class);
+        return mWeatherClient;
     }
 
     @Override
     ReactiveLocationProvider provideLocation() {
-        return mock(ReactiveLocationProvider.class);
+        return mLocationProvider;
     }
 
     @Override
@@ -51,6 +48,10 @@ public class MockModule extends ApplicationModule {
 
     @Override
     WeatherDbHelperExt provideDbHelper() {
-        return mock(WeatherDbHelperExt.class);
+        return mDbHelper;
+    }
+
+    public void setmLocationProvider(ReactiveLocationProvider mLocationProvider) {
+        this.mLocationProvider = mLocationProvider;
     }
 }

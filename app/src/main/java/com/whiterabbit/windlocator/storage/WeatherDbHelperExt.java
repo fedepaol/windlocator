@@ -14,10 +14,14 @@ public class WeatherDbHelperExt extends  WeatherDbHelper {
     }
 
     public WeatherResults getLastNearbyWeather() {
+        open();
         Cursor c = getAllNearbyWeather();
         Weather[] weathers = new Weather[c.getCount()];
         if (weathers.length == 0) {
-            return new WeatherResults(weathers);
+            WeatherResults res = new WeatherResults(weathers);
+            c.close();
+            close();
+            return res;
         }
         c.moveToFirst();
         int count = 0;
@@ -34,6 +38,8 @@ public class WeatherDbHelperExt extends  WeatherDbHelper {
 
             weathers[count++] = w;
         } while (c.moveToNext());
+        c.close();
+        close();
         return new WeatherResults(weathers);
     }
 }
