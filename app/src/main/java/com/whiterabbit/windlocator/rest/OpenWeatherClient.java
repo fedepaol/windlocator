@@ -51,7 +51,7 @@ public class OpenWeatherClient {
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
                 HttpUrl newUrl = original.httpUrl().newBuilder()
-                                      .addQueryParameter("APPID", "")
+                                      .addQueryParameter("APPID", "28aa0a03e19498920401d874cf924894")
                                       .addQueryParameter("units", "metric").build();
 
                 Request enhancedRequest = original.newBuilder()
