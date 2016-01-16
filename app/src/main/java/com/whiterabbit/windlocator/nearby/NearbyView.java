@@ -8,4 +8,6 @@ public interface NearbyView {
     void setProgress(boolean pending);
 
     void goToDetail(long weatherDetail);
+
+    void askForPermission();
 }

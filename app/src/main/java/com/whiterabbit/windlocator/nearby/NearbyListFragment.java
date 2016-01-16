@@ -1,8 +1,10 @@
 package com.whiterabbit.windlocator.nearby;
 
 
+import android.Manifest;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -117,6 +119,15 @@ public class NearbyListFragment extends Fragment implements SwipeRefreshLayout.O
     @Override
     public void goToDetail(long weatherDetail) {
 
+    }
+
+    @Override
+    public void askForPermission() {
+        final String[] INITIAL_PERMS={
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+        };
+        ActivityCompat.requestPermissions(getActivity(), INITIAL_PERMS, 23);
     }
 
     @Override

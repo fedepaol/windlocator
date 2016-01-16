@@ -7,4 +7,8 @@ public interface NearbyPresenter {
     void onResume();
 
     void update();
+
+    void onPermissionResult(boolean success);
+
+
 }

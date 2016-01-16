@@ -1,9 +1,11 @@
 package com.whiterabbit.windlocator.nearby;
 
 
+import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.whiterabbit.windlocator.model.WeatherResults;
@@ -52,13 +54,9 @@ public class NearbyPresenterImpl implements NearbyPresenter {
     }
 
     private boolean hasLocationPermission() {
-        if (Build.VERSION.SDK_INT>Build.VERSION_CODES.LOLLIPOP_MR1) {
-            return true;
-        }
-
-        return (mContext.checkSelfPermission("android.permission.ACCESS_FINE_LOCATION")
+        return (ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_COARSE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED) ||
-                (mContext.checkSelfPermission("android.permission.ACCESS_COARSE_LOCATION")
+                (ContextCompat.checkSelfPermission(mContext, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED);
     }
 
@@ -68,8 +66,14 @@ public class NearbyPresenterImpl implements NearbyPresenter {
             mView.setProgress(true);
             fetchUpdates();
         } else {
-            askForPermission();
+            mView.askForPermission();
         }
+    }
+
+    @Override
+    public void onPermissionResult(boolean success) {
+        if (success)
+            update();
     }
 
     private void fetchUpdates() {
@@ -82,4 +86,6 @@ public class NearbyPresenterImpl implements NearbyPresenter {
                         },
                         () -> mView.setProgress(false));
     }
+
+
 }
