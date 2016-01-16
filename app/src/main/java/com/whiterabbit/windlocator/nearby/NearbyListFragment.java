@@ -108,9 +108,9 @@ public class NearbyListFragment extends Fragment implements SwipeRefreshLayout.O
     @Override
     public void setProgress(boolean pending) {
         if (pending) {
-            // TODO Show drag progress
+          mRefreshLayout.post(() -> mRefreshLayout.setRefreshing(true));
         } else {
-            // TODO stop drag progress
+            mRefreshLayout.post(() -> mRefreshLayout.setRefreshing(false));
         }
     }
 

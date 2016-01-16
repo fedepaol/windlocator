@@ -1,6 +1,8 @@
 package com.whiterabbit.windlocator.nearby;
 
 
+import android.content.Context;
+
 import com.whiterabbit.windlocator.storage.WeatherFacade;
 
 
@@ -20,7 +22,9 @@ public class WeatherListModule {
     }
 
     @Provides
-    public NearbyPresenter provideNearbyPresenter(NearbyView view, WeatherFacade facade) {
-        return new NearbyPresenterImpl(view, facade);
+    public NearbyPresenter provideNearbyPresenter(NearbyView view,
+                                                  WeatherFacade facade,
+                                                  Context c) {
+        return new NearbyPresenterImpl(view, facade, c);
     }
 }
