@@ -58,11 +58,12 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
         @Override
         public void onClick(View v) {
+            /*
             if (v.getId() == R.id.weather_list_preferred) {
                 mListener.onPreferredClicked(_id);
             } else {
                 mListener.onViewClicked(_id);
-            }
+            } */
         }
 
     }

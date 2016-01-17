@@ -18,6 +18,8 @@
 package com.whiterabbit.windlocator.rest;
 
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.HttpUrl;
@@ -50,12 +52,14 @@ public class OpenWeatherClient {
             @Override
             public Response intercept(Chain chain) throws IOException {
                 Request original = chain.request();
+                Log.d("FEDE", original.url().toString());
                 HttpUrl newUrl = original.httpUrl().newBuilder()
                                       .addQueryParameter("APPID", "28aa0a03e19498920401d874cf924894")
                                       .addQueryParameter("units", "metric").build();
 
                 Request enhancedRequest = original.newBuilder()
                                                 .url(newUrl).build();
+                Log.d("FEDE", enhancedRequest.url().toString());
                 return chain.proceed(enhancedRequest);
             }
         });

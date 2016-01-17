@@ -72,8 +72,9 @@ public class NearbyPresenterImpl implements NearbyPresenter {
 
     @Override
     public void onPermissionResult(boolean success) {
-        if (success)
+        if (success) {
             update();
+        }
     }
 
     private void fetchUpdates() {

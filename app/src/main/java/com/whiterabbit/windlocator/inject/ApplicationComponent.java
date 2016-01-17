@@ -4,6 +4,7 @@ package com.whiterabbit.windlocator.inject;
  * Created by fedepaol on 28/06/15.
  */
 
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.whiterabbit.windlocator.WindLocatorApp;
@@ -25,5 +26,6 @@ public interface ApplicationComponent {
     ReactiveLocationProvider getReactiveLocationProvider();
     WeatherDbHelperExt getDbHelper();
     WeatherFacade getFacade();
+    Context getContext();
 }
 

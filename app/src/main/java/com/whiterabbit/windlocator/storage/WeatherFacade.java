@@ -37,17 +37,16 @@ public class WeatherFacade {
                 .setNumUpdates(1)
                 .setInterval(100);
 
-        Observable<WeatherResults> observable =
+        Observable<WeatherResults> observable = mRestClient.getNearbyWeather(43.7, 10.4);
                 mLocationProvider.getUpdatedLocation(request)
                         .first()
+                        .subscribeOn(Schedulers.io())
                         .flatMap(location -> mRestClient.getNearbyWeather(location.getLatitude(),
                                                                           location.getLongitude()));
 
-        observable.subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.io())
-                .subscribe(n -> {
-                            mDatabase.insertNearbyWeather(n);
-                            },
+        observable.subscribeOn(Schedulers.newThread())
+                .observeOn(Schedulers.newThread())
+                .subscribe(n -> mDatabase.insertNearbyWeather(n),
                         requestSubject::onError,
                         requestSubject::onCompleted);
 

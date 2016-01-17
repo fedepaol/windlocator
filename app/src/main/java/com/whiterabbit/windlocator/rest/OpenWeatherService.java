@@ -24,7 +24,7 @@ import retrofit.http.Query;
 import rx.Observable;
 
 public interface OpenWeatherService {
-    @GET("/find")
+    @GET("/data/2.5/find")
     Observable<WeatherResults> listNearbyStations(@Query("lat") double lat,
                                                   @Query("lon") double lon,
                                                   @Query("cnt") long cnt);

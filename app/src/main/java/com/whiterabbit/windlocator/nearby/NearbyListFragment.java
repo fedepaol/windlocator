@@ -3,7 +3,9 @@ package com.whiterabbit.windlocator.nearby;
 
 import android.Manifest;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -128,6 +130,20 @@ public class NearbyListFragment extends Fragment implements SwipeRefreshLayout.O
                 Manifest.permission.ACCESS_COARSE_LOCATION
         };
         ActivityCompat.requestPermissions(getActivity(), INITIAL_PERMS, 23);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode != 23) {
+            return;
+        }
+        for (Integer s : grantResults) {
+            if (s == PackageManager.PERMISSION_GRANTED) {
+                mPresenter.onPermissionResult(true);
+                return;
+            }
+        }
+        mPresenter.onPermissionResult(false);
     }
 
     @Override

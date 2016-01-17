@@ -27,6 +27,7 @@ public class ObservableDbHelper {
     }
 
     public void insertNearbyWeather(WeatherResults nearby) {
+        mDbHelper.open();
         Weather[] weathers = nearby.getWeathers();
         mDbHelper.removeAllNearbyWeather();
         for (int i = 0; i < weathers.length; i++) {
@@ -41,5 +42,8 @@ public class ObservableDbHelper {
                                         localWeather.getWeatherEnum(),
                                         localWeather.getId());
         }
+        mDbHelper.close();
+        WeatherResults results = new WeatherResults(weathers);
+        mSubject.onNext(results);
     }
 }

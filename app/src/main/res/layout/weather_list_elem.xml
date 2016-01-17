@@ -17,11 +17,11 @@
     <TextView style="@style/WeatherTime"
         android:text="04:30PM"
         android:id="@+id/time" />
-    <com.whiterabbit.windlocator.views.PreferredImageView
+    <!-- com.whiterabbit.windlocator.views.PreferredImageView
         android:id="@+id/weather_list_preferred"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/star_not_selected" />
+        android:src="@drawable/star_not_selected" /-->
    </LinearLayout>
 
     <TextView style="@style/WeatherCityName"
