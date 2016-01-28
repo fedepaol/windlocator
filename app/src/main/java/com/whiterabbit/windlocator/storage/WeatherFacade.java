@@ -37,7 +37,7 @@ public class WeatherFacade {
                 .setNumUpdates(1)
                 .setInterval(100);
 
-        Observable<WeatherResults> observable = mRestClient.getNearbyWeather(43.7, 10.4);
+        Observable<WeatherResults> observable =
                 mLocationProvider.getUpdatedLocation(request)
                         .first()
                         .subscribeOn(Schedulers.io())
