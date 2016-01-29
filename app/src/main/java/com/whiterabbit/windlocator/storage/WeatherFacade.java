@@ -1,5 +1,8 @@
 package com.whiterabbit.windlocator.storage;
 
+import android.content.Context;
+import android.location.Address;
+
 import com.google.android.gms.location.LocationRequest;
 import com.whiterabbit.windlocator.model.WeatherResults;
 import com.whiterabbit.windlocator.rest.OpenWeatherClient;
@@ -51,5 +54,13 @@ public class WeatherFacade {
                         requestSubject::onCompleted);
 
         return requestSubject.asObservable();
+    }
+
+    public Observable<List<Address>> getAddressWeatherObservable(String address, Context c) {
+
+        ReactiveLocationProvider locationProvider = new ReactiveLocationProvider(c);
+        Observable<List<Address>> geocodeObservable = locationProvider
+                .getGeocodeObservable(address, 5);
+        return geocodeObservable;
     }
 }

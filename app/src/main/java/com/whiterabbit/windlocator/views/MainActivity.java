@@ -2,42 +2,63 @@ package com.whiterabbit.windlocator.views;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.database.MatrixCursor;
+import android.location.Address;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.CursorAdapter;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.jakewharton.rxbinding.support.v7.widget.RxSearchView;
 import com.whiterabbit.windlocator.R;
+import com.whiterabbit.windlocator.WindLocatorApp;
 import com.whiterabbit.windlocator.nearby.NearbyListFragment;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements MainView {
     @Bind(R.id.tabs)
     TabLayout mTabs;
 
     @Bind(R.id.pager)
     ViewPager mPager;
 
+    @Inject
+    MainPresenter mPresenter;
+
     private SearchView mSearchView;
     private MenuItem mSearchItem;
 
-    FragmentPagerAdapter mAdapter;
+    private FragmentPagerAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        WindLocatorApp app = (WindLocatorApp) getApplication();
+
+        DaggerMainActivityComponent.builder()
+                .applicationComponent(app.getComponent())
+                .mainActivityModule(new MainActivityModule(this))
+                .build().inject(this);
+
         mAdapter = new MyAdapter(getSupportFragmentManager(), getApplicationContext());
         mPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabs));
         mPager.setAdapter(mAdapter);
@@ -67,18 +88,13 @@ public class MainActivity extends AppCompatActivity {
         mSearchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
 
-        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                MenuItemCompat.collapseActionView(mSearchItem);
-                return false;
-            }
+        mPresenter.setAddressObservable(RxSearchView.queryTextChanges(mSearchView)
+                .map(CharSequence::toString)
+                .debounce(400, TimeUnit.MILLISECONDS));
 
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
+        mPresenter.setSearchViewObservable(RxSearchView.queryTextChangeEvents(mSearchView));
+
+
         return true;
     }
 
@@ -95,6 +111,43 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mPresenter.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mPresenter.onResume();
+    }
+
+    private CursorAdapter getSuggestionsFromList(List<Address> locations) {
+        String[] columnNames = {"_id","text"};
+        MatrixCursor cursor = new MatrixCursor(columnNames);
+        String[] temp = new String[2];
+        int id = 0;
+        for (Address item : locations){
+            temp[0] = Integer.toString(id++);
+            temp[1] = item.getFeatureName() + " " + item.getCountryName();
+            cursor.addRow(temp);
+        }
+        String[] from = {"text"};
+        int[] to = {android.R.id.text1};
+        return new SimpleCursorAdapter(getApplicationContext(),
+                                        android.R.layout.simple_list_item_1,
+                                        cursor,
+                                        from,
+                                        to);
+    }
+
+    @Override
+    public void showAddresses(List<Address> l) {
+        CursorAdapter adapter = getSuggestionsFromList(l);
+        mSearchView.setSuggestionsAdapter(adapter);
     }
 
     public static class MyAdapter extends FragmentPagerAdapter {
