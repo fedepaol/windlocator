@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onPrepareOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
@@ -90,9 +90,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
         mPresenter.setAddressObservable(RxSearchView.queryTextChanges(mSearchView)
                 .map(CharSequence::toString)
-                .debounce(400, TimeUnit.MILLISECONDS));
+                /*.debounce(400, TimeUnit.MILLISECONDS)*/);
 
-        mPresenter.setSearchViewObservable(RxSearchView.queryTextChangeEvents(mSearchView));
+        //mPresenter.setSearchViewObservable(RxSearchView.queryTextChangeEvents(mSearchView));
 
 
         return true;

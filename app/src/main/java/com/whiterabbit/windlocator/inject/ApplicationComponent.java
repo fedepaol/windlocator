@@ -22,7 +22,6 @@ import pl.charmas.android.reactivelocation.ReactiveLocationProvider;
 @Component(modules = {ApplicationModule.class})
 public interface ApplicationComponent {
     void inject(WindLocatorApp app);
-    void inject(MainActivity activity);
 
     SharedPreferences getSharedPrefs();
     OpenWeatherClient getOpenWeatherClient();
