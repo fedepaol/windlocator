@@ -68,6 +68,8 @@ public class MainPresenterImpl implements MainPresenter {
     private void handleSearchEvent(SearchViewQueryTextEvent event) {
         if (event.isSubmitted()) {
             // TODO dire all'activity di far vedere il dettaglio
+        } else {
+
         }
     }
 }

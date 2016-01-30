@@ -90,11 +90,11 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
         mPresenter.setAddressObservable(RxSearchView.queryTextChanges(mSearchView)
                 .map(CharSequence::toString)
-                /*.debounce(400, TimeUnit.MILLISECONDS)*/);
+                .filter(s -> s.length() > 3)
+                .debounce(300, TimeUnit.MILLISECONDS));
 
         //mPresenter.setSearchViewObservable(RxSearchView.queryTextChangeEvents(mSearchView));
-
-
+        
         return true;
     }
 
