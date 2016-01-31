@@ -2,6 +2,7 @@ package com.whiterabbit.windlocator.views;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.database.MatrixCursor;
 import android.location.Address;
 import android.os.Bundle;
@@ -20,8 +21,11 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.jakewharton.rxbinding.support.v7.widget.RxSearchView;
+import com.whiterabbit.windlocator.Constants;
 import com.whiterabbit.windlocator.R;
 import com.whiterabbit.windlocator.WindLocatorApp;
+import com.whiterabbit.windlocator.detail.DetailActivity;
+import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.nearby.NearbyListFragment;
 
 import java.util.List;
@@ -153,6 +157,13 @@ public class MainActivity extends AppCompatActivity implements MainView, SearchV
         mLocations = l;
         CursorAdapter adapter = getSuggestionsFromList();
         mSearchView.setSuggestionsAdapter(adapter);
+    }
+
+    @Override
+    public void goToWeatherDetail(Weather w) {
+        Intent i = new Intent(this, DetailActivity.class);
+        i.putExtra(Constants.WEATHER_EXTRA, w);
+        startActivity(i);
     }
 
     @Override

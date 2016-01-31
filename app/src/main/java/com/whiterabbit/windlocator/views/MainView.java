@@ -2,6 +2,8 @@ package com.whiterabbit.windlocator.views;
 
 import android.location.Address;
 
+import com.whiterabbit.windlocator.model.Weather;
+
 import java.util.List;
 
 /**
@@ -9,4 +11,6 @@ import java.util.List;
  */
 public interface MainView {
     void showAddresses(List<Address> l);
+
+    void goToWeatherDetail(Weather w);
 }

@@ -84,4 +84,6 @@ public class MainPresenterImpl implements MainPresenter {
     private void onDetailWeatherReceived(Weather w) {
         Log.d("FEDE", w.getCityName());
     }
+
+
 }
