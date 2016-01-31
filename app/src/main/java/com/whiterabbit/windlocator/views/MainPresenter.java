@@ -18,5 +18,7 @@ public interface MainPresenter {
 
     void onResume();
 
-    void setSearchViewObservable(Observable<SearchViewQueryTextEvent> observable);
+    void onQueryPressed(String query);
+
+    void onAddressSelected(Address a);
 }

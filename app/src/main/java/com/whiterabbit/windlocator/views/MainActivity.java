@@ -17,6 +17,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.jakewharton.rxbinding.support.v7.widget.RxSearchView;
 import com.whiterabbit.windlocator.R;
@@ -32,7 +33,8 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-public class MainActivity extends AppCompatActivity implements MainView {
+
+public class MainActivity extends AppCompatActivity implements MainView, SearchView.OnSuggestionListener, View.OnClickListener {
     @Bind(R.id.tabs)
     TabLayout mTabs;
 
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     private MenuItem mSearchItem;
 
     private FragmentPagerAdapter mAdapter;
+    private List<Address> mLocations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,8 +96,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 .filter(s -> s.length() > 3)
                 .debounce(300, TimeUnit.MILLISECONDS));
 
-        //mPresenter.setSearchViewObservable(RxSearchView.queryTextChangeEvents(mSearchView));
-        
+        mSearchView.setOnSuggestionListener(this);
+        mSearchView.setOnSearchClickListener(this);
+
         return true;
     }
 
@@ -125,12 +129,12 @@ public class MainActivity extends AppCompatActivity implements MainView {
         mPresenter.onResume();
     }
 
-    private CursorAdapter getSuggestionsFromList(List<Address> locations) {
+    private CursorAdapter getSuggestionsFromList() {
         String[] columnNames = {"_id","text"};
         MatrixCursor cursor = new MatrixCursor(columnNames);
         String[] temp = new String[2];
         int id = 0;
-        for (Address item : locations){
+        for (Address item : mLocations){
             temp[0] = Integer.toString(id++);
             temp[1] = item.getFeatureName() + " " + item.getCountryName();
             cursor.addRow(temp);
@@ -146,8 +150,27 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @Override
     public void showAddresses(List<Address> l) {
-        CursorAdapter adapter = getSuggestionsFromList(l);
+        mLocations = l;
+        CursorAdapter adapter = getSuggestionsFromList();
         mSearchView.setSuggestionsAdapter(adapter);
+    }
+
+    @Override
+    public boolean onSuggestionSelect(int position) {
+        return false;
+    }
+
+    @Override
+    public boolean onSuggestionClick(int position) {
+        Address a = mLocations.get(position);
+        // TODO Notify presenter
+        return true;
+    }
+
+    @Override
+    public void onClick(View view) {
+        String query = mSearchView.getQuery().toString();
+        // TODO Notify presenter
     }
 
     public static class MyAdapter extends FragmentPagerAdapter {

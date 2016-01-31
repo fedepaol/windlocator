@@ -1,6 +1,7 @@
 package com.whiterabbit.windlocator.views;
 
 import android.content.Context;
+import android.location.Address;
 
 import com.jakewharton.rxbinding.support.v7.widget.SearchViewQueryTextEvent;
 import com.whiterabbit.windlocator.storage.WeatherFacade;
@@ -18,9 +19,7 @@ public class MainPresenterImpl implements MainPresenter {
     private Context mContext;
     private WeatherFacade mFacade;
     private Subscription mSubscription;
-    private Subscription mEventSubscription;
     private Observable<String> mAddressObservable;
-    private Observable<SearchViewQueryTextEvent> mEventObservable;
 
     public MainPresenterImpl(MainView view, WeatherFacade f, Context c) {
         mView = view;
@@ -37,20 +36,14 @@ public class MainPresenterImpl implements MainPresenter {
     public void onPause() {
         if (mSubscription != null)
             mSubscription.unsubscribe();
-
-        if (mEventSubscription != null)
-            mEventSubscription.unsubscribe();
     }
 
     private void subscribe() {
         if (mAddressObservable != null) {
             mSubscription = mAddressObservable
-                    .flatMap(a -> mFacade.getAddressWeatherObservable(a.toString(), mContext))
+                    .flatMap(a -> mFacade.getAddressWeatherObservable(a, mContext))
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(l -> mView.showAddresses(l));
-        }
-        if (mEventObservable != null) {
-            mEventSubscription = mEventObservable.subscribe(this::handleSearchEvent);
         }
     }
 
@@ -60,16 +53,12 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void setSearchViewObservable(Observable<SearchViewQueryTextEvent> observable) {
-        mEventObservable = observable;
-        subscribe();
+    public void onQueryPressed(String query) {
+        // TODO dire all'activity di cercare e far vedere il dettaglio
     }
 
-    private void handleSearchEvent(SearchViewQueryTextEvent event) {
-        if (event.isSubmitted()) {
-            // TODO dire all'activity di far vedere il dettaglio
-        } else {
-
-        }
+    @Override
+    public void onAddressSelected(Address a) {
+        // TODO dire all'activity di cercare e far vedere il dettaglio
     }
 }
