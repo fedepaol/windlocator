@@ -2,8 +2,9 @@ package com.whiterabbit.windlocator.views;
 
 import android.content.Context;
 import android.location.Address;
+import android.util.Log;
 
-import com.jakewharton.rxbinding.support.v7.widget.SearchViewQueryTextEvent;
+import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.storage.WeatherFacade;
 
 import rx.Observable;
@@ -20,16 +21,22 @@ public class MainPresenterImpl implements MainPresenter {
     private WeatherFacade mFacade;
     private Subscription mSubscription;
     private Observable<String> mAddressObservable;
+    private LocationWeatherFinder mWeatherFinder;
 
-    public MainPresenterImpl(MainView view, WeatherFacade f, Context c) {
+    public MainPresenterImpl(MainView view,
+                             WeatherFacade f,
+                             LocationWeatherFinder finder,
+                             Context c) {
         mView = view;
         mContext = c;
         mFacade = f;
+        mWeatherFinder = finder;
     }
 
     @Override
     public void setAddressObservable(Observable<String> observable) {
         mAddressObservable = observable;
+        subscribe();
     }
 
     @Override
@@ -39,6 +46,8 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     private void subscribe() {
+        // not null check before subscribe might get called before
+        // observable valorization
         if (mAddressObservable != null) {
             mSubscription = mAddressObservable
                     .flatMap(a -> mFacade.getAddressWeatherObservable(a, mContext))
@@ -54,11 +63,25 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onQueryPressed(String query) {
+        // TODO Show progress
+        mWeatherFinder.getAddressWeatherObservable(query)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onDetailWeatherReceived);
         // TODO dire all'activity di cercare e far vedere il dettaglio
     }
 
     @Override
     public void onAddressSelected(Address a) {
+        // TODO Show progress
+        mWeatherFinder.getAddressWeatherObservable(a)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(this::onDetailWeatherReceived);
         // TODO dire all'activity di cercare e far vedere il dettaglio
+    }
+
+    private void onDetailWeatherReceived(Weather w) {
+        Log.d("FEDE", w.getCityName());
     }
 }

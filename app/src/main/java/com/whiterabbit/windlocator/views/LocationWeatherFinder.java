@@ -1,4 +1,4 @@
-package com.whiterabbit.windlocator.utils;
+package com.whiterabbit.windlocator.views;
 
 import android.content.Context;
 import android.location.Address;
@@ -38,7 +38,7 @@ public class LocationWeatherFinder {
     }
 
     public Observable<Weather> getAddressWeatherObservable(Address address) {
-       Observable<Weather> weatherObservable =
+        Observable<Weather> weatherObservable =
                             mClient.getNearbyWeather(address.getLatitude(), address.getLongitude()).
                             flatMap(w -> Observable.just(w.getWeathers()[0]));
         return weatherObservable;

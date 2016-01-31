@@ -163,14 +163,14 @@ public class MainActivity extends AppCompatActivity implements MainView, SearchV
     @Override
     public boolean onSuggestionClick(int position) {
         Address a = mLocations.get(position);
-        // TODO Notify presenter
+        mPresenter.onAddressSelected(a);
         return true;
     }
 
     @Override
     public void onClick(View view) {
         String query = mSearchView.getQuery().toString();
-        // TODO Notify presenter
+        mPresenter.onQueryPressed(query);
     }
 
     public static class MyAdapter extends FragmentPagerAdapter {
