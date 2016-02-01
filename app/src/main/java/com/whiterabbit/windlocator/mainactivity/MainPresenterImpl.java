@@ -1,4 +1,4 @@
-package com.whiterabbit.windlocator.views;
+package com.whiterabbit.windlocator.mainactivity;
 
 import android.content.Context;
 import android.location.Address;
@@ -16,12 +16,12 @@ import rx.schedulers.Schedulers;
  * Created by fedepaol on 29/01/16.
  */
 public class MainPresenterImpl implements MainPresenter {
-    private MainView mView;
-    private Context mContext;
-    private WeatherFacade mFacade;
+    private final MainView mView;
+    private final Context mContext;
+    private final WeatherFacade mFacade;
     private Subscription mSubscription;
     private Observable<String> mAddressObservable;
-    private LocationWeatherFinder mWeatherFinder;
+    private final LocationWeatherFinder mWeatherFinder;
 
     public MainPresenterImpl(MainView view,
                              WeatherFacade f,
@@ -68,7 +68,6 @@ public class MainPresenterImpl implements MainPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onDetailWeatherReceived);
-        // TODO dire all'activity di cercare e far vedere il dettaglio
     }
 
     @Override
@@ -78,12 +77,9 @@ public class MainPresenterImpl implements MainPresenter {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(this::onDetailWeatherReceived);
-        // TODO dire all'activity di cercare e far vedere il dettaglio
     }
 
     private void onDetailWeatherReceived(Weather w) {
-        Log.d("FEDE", w.getCityName());
+        mView.goToWeatherDetail(w);
     }
-
-
 }

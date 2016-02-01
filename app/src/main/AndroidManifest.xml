@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme" >
 
         <activity
-        android:name=".views.MainActivity"
+        android:name=".mainactivity.MainActivity"
         android:theme="@style/AppThemeTabs"
         android:label="@string/title_activity_main" >
         <meta-data

@@ -1,13 +1,10 @@
-package com.whiterabbit.windlocator.views;
+package com.whiterabbit.windlocator.mainactivity;
 
 import android.content.Context;
 import android.location.Address;
-import android.location.Location;
 
 import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.rest.OpenWeatherClient;
-
-import java.util.List;
 
 import javax.inject.Inject;
 

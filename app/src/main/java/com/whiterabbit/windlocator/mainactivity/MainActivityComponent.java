@@ -1,4 +1,4 @@
-package com.whiterabbit.windlocator.views;
+package com.whiterabbit.windlocator.mainactivity;
 
 /**
  * Created by fedepaol on 28/06/15.
@@ -6,7 +6,6 @@ package com.whiterabbit.windlocator.views;
 
 import com.whiterabbit.windlocator.ActivityScope;
 import com.whiterabbit.windlocator.inject.ApplicationComponent;
-import com.whiterabbit.windlocator.nearby.NearbyListFragment;
 
 import dagger.Component;
 

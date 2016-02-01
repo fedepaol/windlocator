@@ -1,10 +1,6 @@
-package com.whiterabbit.windlocator.views;
+package com.whiterabbit.windlocator.mainactivity;
 
 import android.location.Address;
-
-import com.jakewharton.rxbinding.support.v7.widget.SearchViewQueryTextEvent;
-
-import java.util.List;
 
 import rx.Observable;
 

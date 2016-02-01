@@ -11,7 +11,6 @@ import com.whiterabbit.windlocator.WindLocatorApp;
 import com.whiterabbit.windlocator.rest.OpenWeatherClient;
 import com.whiterabbit.windlocator.storage.WeatherDbHelperExt;
 import com.whiterabbit.windlocator.storage.WeatherFacade;
-import com.whiterabbit.windlocator.views.MainActivity;
 
 import javax.inject.Singleton;
 

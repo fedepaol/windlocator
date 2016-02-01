@@ -1,4 +1,4 @@
-package com.whiterabbit.windlocator.views;
+package com.whiterabbit.windlocator.mainactivity;
 
 import android.app.SearchManager;
 import android.content.Context;

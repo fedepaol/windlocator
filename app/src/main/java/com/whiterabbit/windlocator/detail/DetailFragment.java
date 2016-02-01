@@ -28,6 +28,7 @@ public class DetailFragment extends Fragment implements DetailView {
         DetailFragment res = new DetailFragment();
         Bundle b = new Bundle();
         b.putParcelable(Constants.WEATHER_EXTRA, w);
+        res.setArguments(b);
         return res;
     }
 
@@ -37,6 +38,13 @@ public class DetailFragment extends Fragment implements DetailView {
         View res = inflater.inflate(R.layout.fragment_weather_detail, container);
         ButterKnife.bind(this, res);
         return res;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        Weather w = getArguments().getParcelable(Constants.WEATHER_EXTRA);
+        mPresenter.setWeather(w);
     }
 
     @Override

@@ -1,0 +1,95 @@
+package com.whiterabbit.windlocator;
+
+import android.content.Context;
+import android.location.Address;
+
+import com.whiterabbit.windlocator.model.Weather;
+import com.whiterabbit.windlocator.storage.WeatherFacade;
+import com.whiterabbit.windlocator.mainactivity.LocationWeatherFinder;
+import com.whiterabbit.windlocator.mainactivity.MainPresenterImpl;
+import com.whiterabbit.windlocator.mainactivity.MainView;
+
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Rule;
+import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnit;
+import org.mockito.junit.MockitoRule;
+
+import java.util.ArrayList;
+
+import rx.Observable;
+import rx.Scheduler;
+import rx.android.plugins.RxAndroidPlugins;
+import rx.android.plugins.RxAndroidSchedulersHook;
+import rx.schedulers.Schedulers;
+
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+/**
+ * To work on unit tests, switch the Test Artifact in the Build Variants view.
+ */
+public class MainActivityPresenterTest {
+    @Rule
+    public MockitoRule mockitoRule = MockitoJUnit.rule();
+
+    MainPresenterImpl presenter;
+    @Mock
+    MainView view;
+    @Mock
+    WeatherFacade facade;
+    @Mock
+    LocationWeatherFinder finder;
+    @Mock
+    Context context;
+    @Mock
+    Weather weather;
+
+    @BeforeClass
+    static public void initClass() {
+        RxAndroidPlugins.getInstance().registerSchedulersHook(new RxAndroidSchedulersHook() {
+            @Override
+            public Scheduler getMainThreadScheduler() {
+                return Schedulers.immediate();
+            }
+        });
+    }
+
+    @Before
+    public void setup() {
+        presenter = new MainPresenterImpl(view, facade, finder, context);
+    }
+
+    @Test
+    public void testAddressObservable() throws Exception {
+        Observable<String> observable = Observable.just("Pisa");
+        ArrayList<Address> addresses = new ArrayList<Address>(1);
+        addresses.add(mock(Address.class));
+
+        when(facade.getAddressWeatherObservable(anyString(), any(Context.class)))
+                .thenReturn(Observable.just(addresses));
+        presenter.setAddressObservable(observable);
+
+        verify(view).showAddresses(addresses);
+
+        presenter.onPause();
+        presenter.onResume();
+        verify(view, times(2)).showAddresses(addresses);
+    }
+
+    @Test
+    public void testSearchResult() throws Exception {
+        when(finder.getAddressWeatherObservable(anyString())).thenReturn(Observable.just(weather));
+        presenter.onQueryPressed("FAVA");
+        verify(view).goToWeatherDetail(weather);
+    }
+
+
+}

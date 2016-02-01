@@ -1,12 +1,10 @@
-package com.whiterabbit.windlocator.views;
+package com.whiterabbit.windlocator.mainactivity;
 
 
 import android.content.Context;
 
 import com.whiterabbit.windlocator.rest.OpenWeatherClient;
 import com.whiterabbit.windlocator.storage.WeatherFacade;
-
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
