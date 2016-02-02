@@ -25,7 +25,6 @@ import rx.android.plugins.RxAndroidPlugins;
 import rx.android.plugins.RxAndroidSchedulersHook;
 import rx.schedulers.Schedulers;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -52,19 +51,9 @@ public class MainActivityPresenterTest {
     @Mock
     Weather weather;
 
-    @BeforeClass
-    static public void initClass() {
-        RxAndroidPlugins.getInstance().registerSchedulersHook(new RxAndroidSchedulersHook() {
-            @Override
-            public Scheduler getMainThreadScheduler() {
-                return Schedulers.immediate();
-            }
-        });
-    }
-
     @Before
     public void setup() {
-        presenter = new MainPresenterImpl(view, facade, finder, context);
+        presenter = new MainPresenterImpl(view, facade, finder, new FakeSchedulersProvider(), context);
     }
 
     @Test

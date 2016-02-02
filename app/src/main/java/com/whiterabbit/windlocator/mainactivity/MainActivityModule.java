@@ -3,6 +3,7 @@ package com.whiterabbit.windlocator.mainactivity;
 
 import android.content.Context;
 
+import com.whiterabbit.windlocator.schedule.SchedulersProvider;
 import com.whiterabbit.windlocator.rest.OpenWeatherClient;
 import com.whiterabbit.windlocator.storage.WeatherFacade;
 
@@ -30,7 +31,8 @@ public class MainActivityModule {
     public MainPresenter provideMainPresenter(MainView view,
                                               WeatherFacade facade,
                                               LocationWeatherFinder finder,
+                                              SchedulersProvider schedulers,
                                               Context c) {
-        return new MainPresenterImpl(view, facade, finder, c);
+        return new MainPresenterImpl(view, facade, finder, schedulers, c);
     }
 }

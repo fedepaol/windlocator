@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.whiterabbit.windlocator.WindLocatorApp;
+import com.whiterabbit.windlocator.schedule.SchedulersProvider;
 import com.whiterabbit.windlocator.rest.OpenWeatherClient;
 import com.whiterabbit.windlocator.storage.WeatherDbHelperExt;
 import com.whiterabbit.windlocator.storage.WeatherFacade;
@@ -28,5 +29,6 @@ public interface ApplicationComponent {
     WeatherDbHelperExt getDbHelper();
     WeatherFacade getFacade();
     Context getContext();
+    SchedulersProvider getSchedulers();
 }
 
