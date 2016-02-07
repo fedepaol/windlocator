@@ -3,7 +3,9 @@ package com.whiterabbit.windlocator.inject;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.whiterabbit.windlocator.FakeSchedulersProvider;
 import com.whiterabbit.windlocator.rest.OpenWeatherClient;
+import com.whiterabbit.windlocator.schedule.SchedulersProvider;
 import com.whiterabbit.windlocator.storage.WeatherDbHelperExt;
 
 import dagger.Module;
@@ -53,5 +55,10 @@ public class MockModule extends ApplicationModule {
 
     public void setmLocationProvider(ReactiveLocationProvider mLocationProvider) {
         this.mLocationProvider = mLocationProvider;
+    }
+
+    @Override
+    SchedulersProvider provideSchedulers() {
+        return new FakeSchedulersProvider();
     }
 }
