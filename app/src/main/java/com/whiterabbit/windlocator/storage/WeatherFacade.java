@@ -6,6 +6,7 @@ import android.location.Address;
 import com.google.android.gms.location.LocationRequest;
 import com.whiterabbit.windlocator.model.WeatherResults;
 import com.whiterabbit.windlocator.rest.OpenWeatherClient;
+import com.whiterabbit.windlocator.schedule.SchedulersProvider;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class WeatherFacade {
     @Inject ReactiveLocationProvider mLocationProvider;
     @Inject OpenWeatherClient mRestClient;
     @Inject ObservableDbHelper mDatabase;
+    @Inject SchedulersProvider mSchedulers;
 
     @Inject
     public WeatherFacade() {
@@ -43,12 +45,12 @@ public class WeatherFacade {
         Observable<WeatherResults> observable =
                 mLocationProvider.getUpdatedLocation(request)
                         .first()
-                        .observeOn(Schedulers.io())
+                        .observeOn(mSchedulers.provideBackgroundScheduler())
                         .flatMap(location -> mRestClient.getNearbyWeather(location.getLatitude(),
                                                                           location.getLongitude()));
 
-        observable.subscribeOn(Schedulers.newThread())
-                .observeOn(Schedulers.newThread())
+        observable.subscribeOn(mSchedulers.provideBackgroundScheduler())
+                .observeOn(mSchedulers.provideBackgroundScheduler())
                 .subscribe(n -> mDatabase.insertNearbyWeather(n),
                         requestSubject::onError,
                         requestSubject::onCompleted);
