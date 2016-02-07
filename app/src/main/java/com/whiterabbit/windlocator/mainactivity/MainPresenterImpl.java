@@ -3,12 +3,14 @@ package com.whiterabbit.windlocator.mainactivity;
 import android.content.Context;
 import android.location.Address;
 
+import com.jakewharton.rxbinding.support.v7.widget.SearchViewQueryTextEvent;
 import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.schedule.SchedulersProvider;
 import com.whiterabbit.windlocator.storage.WeatherFacade;
 
 import rx.Observable;
 import rx.Subscription;
+import rx.subscriptions.CompositeSubscription;
 
 /**
  * Created by fedepaol on 29/01/16.
@@ -17,8 +19,8 @@ public class MainPresenterImpl implements MainPresenter {
     private final MainView mView;
     private final Context mContext;
     private final WeatherFacade mFacade;
-    private Subscription mSubscription;
-    private Observable<String> mAddressObservable;
+    private CompositeSubscription mSubscription;
+    private Observable<SearchViewQueryTextEvent> mAddressObservable;
     private final LocationWeatherFinder mWeatherFinder;
     private final SchedulersProvider mSchedulers;
 
@@ -35,7 +37,7 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void setAddressObservable(Observable<String> observable) {
+    public void setAddressObservable(Observable<SearchViewQueryTextEvent> observable) {
         mAddressObservable = observable;
         subscribe();
     }
@@ -50,25 +52,24 @@ public class MainPresenterImpl implements MainPresenter {
         // not null check before subscribe might get called before
         // observable valorization
         if (mAddressObservable != null) {
-            mSubscription = mAddressObservable
-                    .flatMap(a -> mFacade.getAddressWeatherObservable(a, mContext))
+            mSubscription = new CompositeSubscription();
+            mSubscription.add(mAddressObservable
+                    .flatMap(a -> mFacade.getAddressWeatherObservable(a.queryText().toString(), mContext))
                     .observeOn(mSchedulers.provideMainThreadScheduler())
-                    .subscribe(l -> mView.showAddresses(l));
+                    .subscribe(mView::showAddresses));
+
+            mSubscription.add(mAddressObservable.
+                        filter(SearchViewQueryTextEvent::isSubmitted)
+                        .map(q -> q.queryText().toString())
+                        .observeOn(mSchedulers.provideMainThreadScheduler())
+                        .subscribe(this::onQueryPressed));
+
         }
     }
 
     @Override
     public void onResume() {
         subscribe();
-    }
-
-    @Override
-    public void onQueryPressed(String query) {
-        mView.setProgress(true);
-        mWeatherFinder.getAddressWeatherObservable(query)
-                .subscribeOn(mSchedulers.provideBackgroundScheduler())
-                .observeOn(mSchedulers.provideMainThreadScheduler())
-                .subscribe(this::onDetailWeatherReceived);
     }
 
     @Override
@@ -83,5 +84,13 @@ public class MainPresenterImpl implements MainPresenter {
     private void onDetailWeatherReceived(Weather w) {
         mView.setProgress(false);
         mView.goToWeatherDetail(w);
+    }
+
+    private void onQueryPressed(String query) {
+        mView.setProgress(true);
+        mWeatherFinder.getAddressWeatherObservable(query)
+                        .subscribeOn(mSchedulers.provideBackgroundScheduler())
+                        .observeOn(mSchedulers.provideMainThreadScheduler())
+                        .subscribe(this::onDetailWeatherReceived);
     }
 }

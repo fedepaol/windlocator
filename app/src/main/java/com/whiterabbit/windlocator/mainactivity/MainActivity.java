@@ -20,12 +20,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.jakewharton.rxbinding.support.v7.widget.RxSearchView;
-import com.whiterabbit.windlocator.Constants;
 import com.whiterabbit.windlocator.R;
 import com.whiterabbit.windlocator.WindLocatorApp;
-import com.whiterabbit.windlocator.detail.DetailActivity;
 import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.nearby.NearbyListFragment;
 
@@ -39,7 +38,7 @@ import butterknife.ButterKnife;
 
 
 
-public class MainActivity extends AppCompatActivity implements MainView, SearchView.OnSuggestionListener, View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements MainView, SearchView.OnSuggestionListener {
     @Bind(R.id.tabs)
     TabLayout mTabs;
 
@@ -99,13 +98,11 @@ public class MainActivity extends AppCompatActivity implements MainView, SearchV
         mSearchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
 
-        mPresenter.setAddressObservable(RxSearchView.queryTextChanges(mSearchView)
-                .map(CharSequence::toString)
-                .filter(s -> s.length() > 3)
+        mPresenter.setAddressObservable(RxSearchView.queryTextChangeEvents(mSearchView)
+                .filter(s -> s.queryText().length() > 3)
                 .debounce(300, TimeUnit.MILLISECONDS));
 
         mSearchView.setOnSuggestionListener(this);
-        mSearchView.setOnSearchClickListener(this);
 
         return true;
     }
@@ -165,9 +162,12 @@ public class MainActivity extends AppCompatActivity implements MainView, SearchV
 
     @Override
     public void goToWeatherDetail(Weather w) {
+        /*
         Intent i = new Intent(this, DetailActivity.class);
         i.putExtra(Constants.WEATHER_EXTRA, w);
-        startActivity(i);
+        startActivity(i); */
+
+        Toast.makeText(this, "Going to " + w.getCityName(), Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -189,12 +189,6 @@ public class MainActivity extends AppCompatActivity implements MainView, SearchV
         Address a = mLocations.get(position);
         mPresenter.onAddressSelected(a);
         return true;
-    }
-
-    @Override
-    public void onClick(View view) {
-        String query = mSearchView.getQuery().toString();
-        mPresenter.onQueryPressed(query);
     }
 
     public static class MyAdapter extends FragmentPagerAdapter {

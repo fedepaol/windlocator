@@ -3,6 +3,7 @@ package com.whiterabbit.windlocator;
 import android.content.Context;
 import android.location.Address;
 
+import com.jakewharton.rxbinding.support.v7.widget.SearchViewQueryTextEvent;
 import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.storage.WeatherFacade;
 import com.whiterabbit.windlocator.mainactivity.LocationWeatherFinder;
@@ -58,7 +59,8 @@ public class MainActivityPresenterTest {
 
     @Test
     public void testAddressObservable() throws Exception {
-        Observable<String> observable = Observable.just("Pisa");
+        Observable<SearchViewQueryTextEvent> observable =
+                Observable.just(SearchViewQueryTextEvent.create(null ,"Pisa", false));
         ArrayList<Address> addresses = new ArrayList<Address>(1);
         addresses.add(mock(Address.class));
 
@@ -75,8 +77,19 @@ public class MainActivityPresenterTest {
 
     @Test
     public void testSearchResult() throws Exception {
+        Observable<SearchViewQueryTextEvent> observable =
+                Observable.just(SearchViewQueryTextEvent.create(null ,"Pisa", true));
+
+
+        ArrayList<Address> addresses = new ArrayList<Address>(1);
+        addresses.add(mock(Address.class));
+
+        when(facade.getAddressWeatherObservable(anyString(), any(Context.class)))
+                .thenReturn(Observable.just(addresses));
+
+
         when(finder.getAddressWeatherObservable(anyString())).thenReturn(Observable.just(weather));
-        presenter.onQueryPressed("FAVA");
+        presenter.setAddressObservable(observable);
         verify(view).setProgress(true);
         verify(view).setProgress(false);
         verify(view).goToWeatherDetail(weather);
