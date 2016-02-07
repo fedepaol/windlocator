@@ -64,7 +64,7 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onQueryPressed(String query) {
-        // TODO Show progress
+        mView.setProgress(true);
         mWeatherFinder.getAddressWeatherObservable(query)
                 .subscribeOn(mSchedulers.provideBackgroundScheduler())
                 .observeOn(mSchedulers.provideMainThreadScheduler())
@@ -73,7 +73,7 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void onAddressSelected(Address a) {
-        // TODO Show progress
+        mView.setProgress(true);
         mWeatherFinder.getAddressWeatherObservable(a)
                 .subscribeOn(mSchedulers.provideBackgroundScheduler())
                 .observeOn(mSchedulers.provideMainThreadScheduler())
@@ -81,6 +81,7 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     private void onDetailWeatherReceived(Weather w) {
+        mView.setProgress(false);
         mView.goToWeatherDetail(w);
     }
 }

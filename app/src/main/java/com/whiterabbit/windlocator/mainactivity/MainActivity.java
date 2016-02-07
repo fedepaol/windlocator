@@ -19,6 +19,7 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 
 import com.jakewharton.rxbinding.support.v7.widget.RxSearchView;
 import com.whiterabbit.windlocator.Constants;
@@ -44,6 +45,9 @@ public class MainActivity extends AppCompatActivity implements MainView, SearchV
 
     @Bind(R.id.pager)
     ViewPager mPager;
+
+    @Bind(R.id.main_progress)
+    ProgressBar mProgress;
 
     @Inject
     MainPresenter mPresenter;
@@ -164,6 +168,15 @@ public class MainActivity extends AppCompatActivity implements MainView, SearchV
         Intent i = new Intent(this, DetailActivity.class);
         i.putExtra(Constants.WEATHER_EXTRA, w);
         startActivity(i);
+    }
+
+    @Override
+    public void setProgress(boolean inProgress) {
+        if (inProgress) {
+            mProgress.setVisibility(View.VISIBLE);
+        } else {
+            mProgress.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override

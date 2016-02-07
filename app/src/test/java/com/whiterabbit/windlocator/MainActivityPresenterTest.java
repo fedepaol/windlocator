@@ -77,8 +77,8 @@ public class MainActivityPresenterTest {
     public void testSearchResult() throws Exception {
         when(finder.getAddressWeatherObservable(anyString())).thenReturn(Observable.just(weather));
         presenter.onQueryPressed("FAVA");
+        verify(view).setProgress(true);
+        verify(view).setProgress(false);
         verify(view).goToWeatherDetail(weather);
     }
-
-
 }

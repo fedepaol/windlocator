@@ -13,4 +13,6 @@ public interface MainView {
     void showAddresses(List<Address> l);
 
     void goToWeatherDetail(Weather w);
+
+    void setProgress(boolean inProgress);
 }
