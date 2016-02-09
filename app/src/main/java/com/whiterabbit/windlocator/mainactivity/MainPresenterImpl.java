@@ -10,6 +10,7 @@ import com.whiterabbit.windlocator.storage.WeatherFacade;
 
 import rx.Observable;
 import rx.Subscription;
+import rx.subjects.PublishSubject;
 import rx.subscriptions.CompositeSubscription;
 
 /**
@@ -23,6 +24,7 @@ public class MainPresenterImpl implements MainPresenter {
     private Observable<SearchViewQueryTextEvent> mAddressObservable;
     private final LocationWeatherFinder mWeatherFinder;
     private final SchedulersProvider mSchedulers;
+    private PublishSubject<SearchViewQueryTextEvent> mSearchSubject;
 
     public MainPresenterImpl(MainView view,
                              WeatherFacade f,
@@ -51,14 +53,18 @@ public class MainPresenterImpl implements MainPresenter {
     private void subscribe() {
         // not null check before subscribe might get called before
         // observable valorization
+
         if (mAddressObservable != null) {
+            mSearchSubject = PublishSubject.create();
+            mAddressObservable.subscribe(e -> mSearchSubject.onNext(e));
+
             mSubscription = new CompositeSubscription();
-            mSubscription.add(mAddressObservable
+            mSubscription.add(mSearchSubject
                     .flatMap(a -> mFacade.getAddressWeatherObservable(a.queryText().toString(), mContext))
                     .observeOn(mSchedulers.provideMainThreadScheduler())
                     .subscribe(mView::showAddresses));
 
-            mSubscription.add(mAddressObservable.
+            mSubscription.add(mSearchSubject.
                         filter(SearchViewQueryTextEvent::isSubmitted)
                         .map(q -> q.queryText().toString())
                         .observeOn(mSchedulers.provideMainThreadScheduler())
