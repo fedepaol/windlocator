@@ -56,7 +56,6 @@ public class MainPresenterImpl implements MainPresenter {
 
         if (mAddressObservable != null) {
             mSearchSubject = PublishSubject.create();
-            mAddressObservable.subscribe(e -> mSearchSubject.onNext(e));
 
             mSubscription = new CompositeSubscription();
             mSubscription.add(mSearchSubject
@@ -70,6 +69,7 @@ public class MainPresenterImpl implements MainPresenter {
                         .observeOn(mSchedulers.provideMainThreadScheduler())
                         .subscribe(this::onQueryPressed));
 
+            mAddressObservable.subscribe(e -> mSearchSubject.onNext(e));
         }
     }
 
