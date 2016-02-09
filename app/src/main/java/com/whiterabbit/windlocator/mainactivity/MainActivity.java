@@ -2,7 +2,6 @@ package com.whiterabbit.windlocator.mainactivity;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
 import android.database.MatrixCursor;
 import android.location.Address;
 import android.os.Bundle;
@@ -69,7 +68,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 .mainActivityModule(new MainActivityModule(this))
                 .build().inject(this);
 
-        mAdapter = new MyAdapter(getSupportFragmentManager(), getApplicationContext());
+        mAdapter = new PagerAdapter(getSupportFragmentManager(), getApplicationContext());
         mPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabs));
         mPager.setAdapter(mAdapter);
         mTabs.setTabsFromPagerAdapter(mAdapter);
@@ -101,18 +100,13 @@ public class MainActivity extends AppCompatActivity implements MainView {
         mPresenter.setAddressObservable(RxSearchView.queryTextChangeEvents(mSearchView)
                 .filter(s -> s.queryText().length() > 3)
                 .debounce(300, TimeUnit.MILLISECONDS));
-        
+
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -177,9 +171,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
         }
     }
 
-    public static class MyAdapter extends FragmentPagerAdapter {
+    public static class PagerAdapter extends FragmentPagerAdapter {
         private Context mContext;
-        public MyAdapter(FragmentManager fm, Context c) {
+        public PagerAdapter(FragmentManager fm, Context c) {
             super(fm);
             mContext = c;
         }
