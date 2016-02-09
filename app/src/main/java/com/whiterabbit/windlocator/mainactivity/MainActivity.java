@@ -101,9 +101,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         mPresenter.setAddressObservable(RxSearchView.queryTextChangeEvents(mSearchView)
                 .filter(s -> s.queryText().length() > 3)
                 .debounce(300, TimeUnit.MILLISECONDS));
-
-        mSearchView.setOnSuggestionListener(this);
-
+        
         return true;
     }
 
