@@ -38,7 +38,7 @@ import butterknife.ButterKnife;
 
 
 
-public class MainActivity extends AppCompatActivity implements MainView, SearchView.OnSuggestionListener {
+public class MainActivity extends AppCompatActivity implements MainView {
     @Bind(R.id.tabs)
     TabLayout mTabs;
 
@@ -177,18 +177,6 @@ public class MainActivity extends AppCompatActivity implements MainView, SearchV
         } else {
             mProgress.setVisibility(View.INVISIBLE);
         }
-    }
-
-    @Override
-    public boolean onSuggestionSelect(int position) {
-        return false;
-    }
-
-    @Override
-    public boolean onSuggestionClick(int position) {
-        Address a = mLocations.get(position);
-        mPresenter.onAddressSelected(a);
-        return true;
     }
 
     public static class MyAdapter extends FragmentPagerAdapter {

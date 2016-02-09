@@ -59,12 +59,13 @@ public class MainPresenterImpl implements MainPresenter {
 
             mSubscription = new CompositeSubscription();
             mSubscription.add(mSearchSubject
+                    .filter(q -> !q.isSubmitted())
                     .flatMap(a -> mFacade.getAddressWeatherObservable(a.queryText().toString(), mContext))
                     .observeOn(mSchedulers.provideMainThreadScheduler())
                     .subscribe(mView::showAddresses));
 
-            mSubscription.add(mSearchSubject.
-                        filter(SearchViewQueryTextEvent::isSubmitted)
+            mSubscription.add(mSearchSubject
+                        .filter(SearchViewQueryTextEvent::isSubmitted)
                         .map(q -> q.queryText().toString())
                         .observeOn(mSchedulers.provideMainThreadScheduler())
                         .subscribe(this::onQueryPressed));
