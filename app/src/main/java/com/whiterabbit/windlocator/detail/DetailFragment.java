@@ -35,7 +35,7 @@ public class DetailFragment extends Fragment implements DetailView {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View res = inflater.inflate(R.layout.fragment_weather_detail, container);
+        View res = inflater.inflate(R.layout.fragment_weather_detail, null);
         ButterKnife.bind(this, res);
         return res;
     }

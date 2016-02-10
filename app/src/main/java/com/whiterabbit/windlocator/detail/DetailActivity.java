@@ -16,13 +16,14 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_detail);
 
         Intent i = getIntent();
         Weather w = i.getParcelableExtra(Constants.WEATHER_EXTRA);
 
         if (getFragmentManager().findFragmentById(R.id.detail_fragment) == null) {
             Fragment f = DetailFragment.createInstance(w);
-            getSupportFragmentManager().beginTransaction().add(R.id.detail_fragment, f)
+            getSupportFragmentManager().beginTransaction().replace(R.id.detail_fragment, f)
                     .commit();
         }
     }

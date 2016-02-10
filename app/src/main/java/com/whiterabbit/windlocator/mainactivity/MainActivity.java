@@ -2,6 +2,7 @@ package com.whiterabbit.windlocator.mainactivity;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.database.MatrixCursor;
 import android.location.Address;
 import android.os.Bundle;
@@ -22,8 +23,10 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding.support.v7.widget.RxSearchView;
+import com.whiterabbit.windlocator.Constants;
 import com.whiterabbit.windlocator.R;
 import com.whiterabbit.windlocator.WindLocatorApp;
+import com.whiterabbit.windlocator.detail.DetailActivity;
 import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.nearby.NearbyListFragment;
 
@@ -37,7 +40,7 @@ import butterknife.ButterKnife;
 
 
 
-public class MainActivity extends AppCompatActivity implements MainView {
+public class MainActivity extends AppCompatActivity implements MainView, SearchView.OnSuggestionListener {
     @Bind(R.id.tabs)
     TabLayout mTabs;
 
@@ -97,9 +100,12 @@ public class MainActivity extends AppCompatActivity implements MainView {
         mSearchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
 
+        mSearchView.setOnSuggestionListener(this);
+
         mPresenter.setAddressObservable(RxSearchView.queryTextChangeEvents(mSearchView)
                 .filter(s -> s.queryText().length() > 3)
                 .debounce(300, TimeUnit.MILLISECONDS));
+
 
         return true;
     }
@@ -154,12 +160,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @Override
     public void goToWeatherDetail(Weather w) {
-        /*
         Intent i = new Intent(this, DetailActivity.class);
         i.putExtra(Constants.WEATHER_EXTRA, w);
-        startActivity(i); */
-
-        Toast.makeText(this, "Going to " + w.getCityName(), Toast.LENGTH_LONG).show();
+        startActivity(i);
     }
 
     @Override
@@ -169,6 +172,18 @@ public class MainActivity extends AppCompatActivity implements MainView {
         } else {
             mInProgressDialog.dismiss();
         }
+    }
+
+    @Override
+    public boolean onSuggestionSelect(int position) {
+        return false;
+    }
+
+    @Override
+    public boolean onSuggestionClick(int position) {
+        Address a = mLocations.get(position);
+        mPresenter.onAddressSelected(a);
+        return false;
     }
 
     public static class PagerAdapter extends FragmentPagerAdapter {
