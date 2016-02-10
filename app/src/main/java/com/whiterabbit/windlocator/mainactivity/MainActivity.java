@@ -44,9 +44,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @Bind(R.id.pager)
     ViewPager mPager;
 
-    @Bind(R.id.main_progress)
-    ProgressBar mProgress;
-
     @Inject
     MainPresenter mPresenter;
 
@@ -55,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     private FragmentPagerAdapter mAdapter;
     private List<Address> mLocations;
+
+    private ProgressDialogFragment mInProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
         mPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTabs));
         mPager.setAdapter(mAdapter);
         mTabs.setTabsFromPagerAdapter(mAdapter);
+        mInProgressDialog = new ProgressDialogFragment();
     }
 
     @Override
@@ -165,9 +165,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @Override
     public void setProgress(boolean inProgress) {
         if (inProgress) {
-            mProgress.setVisibility(View.VISIBLE);
+            mInProgressDialog.show(getSupportFragmentManager(), "progressdialog");
         } else {
-            mProgress.setVisibility(View.INVISIBLE);
+            mInProgressDialog.dismiss();
         }
     }
 
@@ -204,6 +204,5 @@ public class MainActivity extends AppCompatActivity implements MainView {
             return "";
         }
     }
-
 }
 

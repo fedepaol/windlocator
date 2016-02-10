@@ -20,4 +20,6 @@
     <string name="nearby">Nearby</string>
     <string name="favorites">Favorites</string>
 
+    <string name="main_progress">Looking for weather..</string>
+
 </resources>
