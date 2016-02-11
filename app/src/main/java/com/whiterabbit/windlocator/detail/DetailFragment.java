@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.whiterabbit.windlocator.Constants;
 import com.whiterabbit.windlocator.R;
+import com.whiterabbit.windlocator.WindLocatorApp;
+import com.whiterabbit.windlocator.mainactivity.DaggerMainActivityComponent;
+import com.whiterabbit.windlocator.mainactivity.MainActivityModule;
 import com.whiterabbit.windlocator.model.Weather;
 
 import javax.inject.Inject;
@@ -35,7 +38,7 @@ public class DetailFragment extends Fragment implements DetailView {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View res = inflater.inflate(R.layout.fragment_weather_detail, null);
+        View res = inflater.inflate(R.layout.fragment_weather_detail, container, false);
         ButterKnife.bind(this, res);
         return res;
     }
@@ -43,6 +46,14 @@ public class DetailFragment extends Fragment implements DetailView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        WindLocatorApp app = (WindLocatorApp) getActivity().getApplication();
+
+        DaggerDetailComponent.builder()
+                .applicationComponent(app.getComponent())
+                .detailModule(new DetailModule(this))
+                .build().inject(this);
+
+
         Weather w = getArguments().getParcelable(Constants.WEATHER_EXTRA);
         mPresenter.setWeather(w);
     }
