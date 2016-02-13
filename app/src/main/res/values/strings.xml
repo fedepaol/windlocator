@@ -21,5 +21,6 @@
     <string name="favorites">Favorites</string>
 
     <string name="main_progress">Looking for weather..</string>
+    <string name="today">Today</string>
 
 </resources>
