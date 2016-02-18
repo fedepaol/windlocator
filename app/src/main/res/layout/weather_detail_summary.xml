@@ -5,34 +5,11 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/wind_large"/>
+        android:id="@+id/detail_wind_compass"
+        android:src="@drawable/wind_direction_compass"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="22"
-        android:id="@+id/detail_speed"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Km/h"
-        android:id="@+id/detail_speed_unit"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/temperature_large"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="32C"
-        android:id="@+id/detail_temperature"/>
-    <ImageView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/detail_weather_icon"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cloudy"
-        android:id="@+id/detail_weather_desc"/>
+        android:text="NE"
+        android:id="@+id/detail_weather_direction"/>
 </merge>
