@@ -6,10 +6,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/detail_wind_compass"
+        android:scaleType="centerCrop"
         android:src="@drawable/wind_direction_compass"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
         android:text="NE"
         android:id="@+id/detail_weather_direction"/>
+   <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"
+        android:id="@+id/placeholder"
+       />
 </merge>

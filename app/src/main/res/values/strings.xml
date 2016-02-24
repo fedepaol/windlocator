@@ -17,6 +17,15 @@
     <string name="west">West</string>
     <string name="north_west">North West</string>
 
+    <string name="short_north">N</string>
+    <string name="short_north_east">NE</string>
+    <string name="short_east">E</string>
+    <string name="short_south_east">SE</string>
+    <string name="short_south">S</string>
+    <string name="short_south_west">SW</string>
+    <string name="short_west">W</string>
+    <string name="short_north_west">NW</string>
+
     <string name="nearby">Nearby</string>
     <string name="favorites">Favorites</string>
 

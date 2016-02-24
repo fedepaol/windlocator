@@ -28,11 +28,13 @@
 </LinearLayout>
 
     <com.whiterabbit.windlocator.detail.WeatherDetailSummary
+        android:id="@+id/detail_detail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content">
 
 
-<!-- LinearLayout
+<LinearLayout
+    android:id="@+id/detail_content"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
@@ -74,5 +76,6 @@
         android:text="Cloudy"
         android:id="@+id/detail_weather_desc"/>
 
-</LinearLayout-->
+</LinearLayout>
+</com.whiterabbit.windlocator.detail.WeatherDetailSummary>
 </LinearLayout>

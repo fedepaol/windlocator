@@ -2,7 +2,9 @@ package com.whiterabbit.windlocator.detail;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,13 +16,15 @@ import butterknife.ButterKnife;
 
 public class WeatherDetailSummary extends ViewGroup {
     @Bind(R.id.detail_wind_compass)
-    ImageView mWindIndicator;
+    ImageView mWindCompass;
 
     @Bind(R.id.detail_weather_direction)
-    TextView mDirection;
+    TextView mTextDirection;
 
-    double direction = 0;
-    final static int NORTH = 0;
+    ViewGroup mContent;
+
+    double direction = Math.PI / 4.0;
+    final static double NORTH = Math.PI / 4 * 7;
 
     public WeatherDetailSummary(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
@@ -31,43 +35,70 @@ public class WeatherDetailSummary extends ViewGroup {
         LayoutInflater.from(context).inflate(R.layout.weather_detail_summary, this, true);
         ButterKnife.bind(this, this);
         direction = NORTH;
-        mDirection.setText("NE");
+        mTextDirection.setText("NE");
+    }
+
+    private int getTextPad() {
+       return (int) getResources().getDisplayMetrics().density * 25;
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (mContent == null) {
+            mContent = (ViewGroup) findViewById(R.id.detail_content);
+        }
         int widthSize = getDefaultSize(0, widthMeasureSpec);
         int heightSize = getDefaultSize(0, heightMeasureSpec);
 
 
-        measureChild(mDirection, widthMeasureSpec, heightMeasureSpec);
+        measureChild(mTextDirection, widthMeasureSpec, heightMeasureSpec);
 
-        int worstSize = Math.max(mDirection.getMeasuredWidth(), mDirection.getMeasuredHeight());
-        int circleRadius = Math.min(widthSize, heightSize) - worstSize;
+        int textSize = Math.max(mTextDirection.getMeasuredWidth(), mTextDirection.getMeasuredHeight());
 
-        int circleSpec = MeasureSpec.makeMeasureSpec(circleRadius, MeasureSpec.EXACTLY);
-        measureChild(mWindIndicator, circleSpec, circleSpec);
+        int textPad = getTextPad();
+        int circleDiameter = Math.min(widthSize, heightSize) - 2 * (textSize + textPad);
+        int circleSpec = MeasureSpec.makeMeasureSpec(circleDiameter, MeasureSpec.EXACTLY);
+        measureChild(mWindCompass, circleSpec, circleSpec);
 
-        int size = circleRadius + worstSize + getPaddingLeft() + getPaddingRight();
-        setMeasuredDimension(size, size);
+        int contentSpec = MeasureSpec.makeMeasureSpec((int) (circleDiameter * 0.7), MeasureSpec.EXACTLY);
+        measureChild(mContent, contentSpec, contentSpec);
+
+        setMeasuredDimension(widthSize, widthSize);
     }
 
     @Override
-    protected void onLayout(boolean changed, int l, int r, int t, int b) {
-        int textSize = Math.max(mDirection.getMeasuredWidth(), mDirection.getMeasuredHeight());
-        int windLeft = getPaddingLeft() + textSize;
-        int windTop = getPaddingTop() + textSize;
-        mWindIndicator.layout(windLeft, windLeft + mWindIndicator.getMeasuredWidth(),
-                              windTop, windTop + mWindIndicator.getMeasuredHeight());
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        int textSize = Math.max(mTextDirection.getMeasuredWidth(), mTextDirection.getMeasuredHeight());
+        int windLeft = getPaddingLeft() + textSize + getTextPad();
+        int windTop = getPaddingTop() + textSize + getTextPad();
+        mWindCompass.layout(windLeft, windTop, windLeft + mWindCompass.getMeasuredWidth(),
+                              windTop + mWindCompass.getMeasuredHeight());
 
 
-        int circleCenterX = windLeft + mWindIndicator.getMeasuredWidth() / 2;
-        int circleCenterY = windTop + mWindIndicator.getMeasuredWidth() / 2;
-        int circleRadius = mWindIndicator.getMeasuredWidth() / 2;
+        int circleCenterX = windLeft + mWindCompass.getMeasuredWidth() / 2;
+        int circleCenterY = windTop + mWindCompass.getMeasuredWidth() / 2;
+        int circleRadius = mWindCompass.getMeasuredWidth() / 2 + getTextPad();
         int directionX = (int) (circleCenterX + Math.cos(direction) * circleRadius);
         int directionY = (int) (circleCenterY + Math.sin(direction) * circleRadius);
-        mDirection.layout(directionX - mDirection.getMeasuredWidth() / 2, directionX + mDirection.getMeasuredWidth(),
-                          directionY - mDirection.getMeasuredHeight(), directionY + mDirection.getMeasuredHeight());
+
+        mTextDirection.layout(directionX - mTextDirection.getMeasuredWidth() / 2,
+                          directionY - mTextDirection.getMeasuredHeight() / 2,
+                          directionX + mTextDirection.getMeasuredWidth() / 2,
+                          directionY + mTextDirection.getMeasuredHeight() / 2);
+
+
+        int contentLeft = (int) (windLeft + 0.15 * mWindCompass.getMeasuredWidth());
+        int contentRight = contentLeft + mContent.getMeasuredWidth();
+        int contentTop = windTop + (int) (0.15 * mWindCompass.getMeasuredHeight());
+        int contentBottom = contentTop + mContent.getMeasuredHeight();
+        mContent.layout(contentLeft, contentTop, contentRight, contentBottom);
+    }
+
+    public void setWindDirection(double degree, String text) {
+        mWindCompass.setRotation((int) degree - 45); // -45 because the pic I got is rotated by 45
+        direction = degree / 360.0 * ( 2 * Math.PI) - Math.PI / 2;
+        mTextDirection.setText(text);
+        invalidate();
     }
 
 

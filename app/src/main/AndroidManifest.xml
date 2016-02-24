@@ -18,15 +18,11 @@
         android:name=".mainactivity.MainActivity"
         android:theme="@style/AppThemeTabs"
         android:label="@string/title_activity_main" >
-        <meta-data
-            android:name="android.app.default_searchable"
-            android:value=".views.SearchResultActivity" />
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".views.SearchResultActivity" />
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".detail.DetailActivity"/>
 

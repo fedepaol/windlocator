@@ -14,6 +14,7 @@ import com.whiterabbit.windlocator.WindLocatorApp;
 import com.whiterabbit.windlocator.mainactivity.DaggerMainActivityComponent;
 import com.whiterabbit.windlocator.mainactivity.MainActivityModule;
 import com.whiterabbit.windlocator.model.Weather;
+import com.whiterabbit.windlocator.utils.WeatherElementUtils;
 
 import javax.inject.Inject;
 
@@ -21,11 +22,10 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class DetailFragment extends Fragment implements DetailView {
-    @Bind(R.id.detail_city_name)
-    TextView mCityName;
-
     @Inject
     DetailPresenter mPresenter;
+    @Bind(R.id.detail_detail)
+    WeatherDetailSummary mDetailSummary;
 
     public static DetailFragment createInstance(Weather w) {
         DetailFragment res = new DetailFragment();
@@ -60,6 +60,9 @@ public class DetailFragment extends Fragment implements DetailView {
 
     @Override
     public void showWeather(Weather w) {
-        mCityName.setText(w.getCityName());
+        double degree = w.getWindDegree();
+        String label = WeatherElementUtils.getShortWindOrientationFromDegrees(degree,
+                                                        getActivity().getApplicationContext());
+        mDetailSummary.setWindDirection(degree, label);
     }
 }
