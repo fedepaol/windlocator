@@ -3,16 +3,14 @@ package com.whiterabbit.windlocator.detail;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.whiterabbit.windlocator.Constants;
 import com.whiterabbit.windlocator.R;
 import com.whiterabbit.windlocator.WindLocatorApp;
-import com.whiterabbit.windlocator.mainactivity.DaggerMainActivityComponent;
-import com.whiterabbit.windlocator.mainactivity.MainActivityModule;
 import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.utils.WeatherElementUtils;
 
@@ -24,8 +22,12 @@ import butterknife.ButterKnife;
 public class DetailFragment extends Fragment implements DetailView {
     @Inject
     DetailPresenter mPresenter;
+
     @Bind(R.id.detail_detail)
     WeatherDetailSummary mDetailSummary;
+
+    @Bind(R.id.detail_forecasts)
+    RecyclerView mNextDaysForecasts;
 
     public static DetailFragment createInstance(Weather w) {
         DetailFragment res = new DetailFragment();

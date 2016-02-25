@@ -83,6 +83,7 @@ public class MainPresenterImpl implements MainPresenter {
     public void onAddressSelected(Address a) {
         mView.setProgress(true);
         mWeatherFinder.getAddressWeatherObservable(a)
+                .flatMap(w -> )
                 .subscribeOn(mSchedulers.provideBackgroundScheduler())
                 .observeOn(mSchedulers.provideMainThreadScheduler())
                 .subscribe(this::onDetailWeatherReceived);

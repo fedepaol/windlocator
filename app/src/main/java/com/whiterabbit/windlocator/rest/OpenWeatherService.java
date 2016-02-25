@@ -28,4 +28,9 @@ public interface OpenWeatherService {
     Observable<WeatherResults> listNearbyStations(@Query("lat") double lat,
                                                   @Query("lon") double lon,
                                                   @Query("cnt") long cnt);
+
+    @GET("/data/2.5/forecast")
+    Observable<WeatherResults> getLocationForecasts(@Query("id") long id);
+
+
 }

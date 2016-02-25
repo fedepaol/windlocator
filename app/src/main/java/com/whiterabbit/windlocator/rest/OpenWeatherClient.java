@@ -48,20 +48,17 @@ public class OpenWeatherClient {
 
     public OpenWeatherClient() {
         OkHttpClient client = new OkHttpClient();
-        client.interceptors().add(new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request original = chain.request();
-                Log.d("FEDE", original.url().toString());
-                HttpUrl newUrl = original.httpUrl().newBuilder()
-                                      .addQueryParameter("APPID", "28aa0a03e19498920401d874cf924894")
-                                      .addQueryParameter("units", "metric").build();
+        client.interceptors().add(chain -> {
+            Request original = chain.request();
+            Log.d("FEDE", original.url().toString());
+            HttpUrl newUrl = original.httpUrl().newBuilder()
+                                  .addQueryParameter("APPID", "28aa0a03e19498920401d874cf924894")
+                                  .addQueryParameter("units", "metric").build();
 
-                Request enhancedRequest = original.newBuilder()
-                                                .url(newUrl).build();
-                Log.d("FEDE", enhancedRequest.url().toString());
-                return chain.proceed(enhancedRequest);
-            }
+            Request enhancedRequest = original.newBuilder()
+                                            .url(newUrl).build();
+            Log.d("FEDE", enhancedRequest.url().toString());
+            return chain.proceed(enhancedRequest);
         });
 
         mClient = new Retrofit.Builder()
@@ -75,6 +72,10 @@ public class OpenWeatherClient {
 
     public Observable<WeatherResults> getNearbyWeather(double latitude, double longitude) {
         return mClient.listNearbyStations(latitude, longitude, 10);
+    }
+
+    public Observable<WeatherResults> getForecasts(long id) {
+        return mClient.getLocationForecasts(id);
     }
 
 }

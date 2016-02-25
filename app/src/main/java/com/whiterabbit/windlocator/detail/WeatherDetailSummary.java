@@ -49,7 +49,7 @@ public class WeatherDetailSummary extends ViewGroup {
         }
         int widthSize = getDefaultSize(0, widthMeasureSpec);
         int heightSize = getDefaultSize(0, heightMeasureSpec);
-        
+
         measureChild(mTextDirection, widthMeasureSpec, heightMeasureSpec);
 
         int textSize = Math.max(mTextDirection.getMeasuredWidth(), mTextDirection.getMeasuredHeight());
