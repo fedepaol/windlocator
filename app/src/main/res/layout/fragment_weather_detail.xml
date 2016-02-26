@@ -1,31 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="right"
+    android:layout_height="match_parent"
     android:orientation="vertical">
-    <TextView
-        style="@style/DetailTextPlain"
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/margin_small"
+        android:layout_marginTop="@dimen/margin_small"
         android:gravity="right"
-        android:text="@string/today"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/detail_date"
-        android:text="July, 20"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/detail_time"
-        android:text="12:30 PM"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/detail_city_name"/>
-</LinearLayout>
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/DetailTextPlain"
+            android:gravity="right"
+            android:text="@string/today" />
+
+        <TextView
+            android:id="@+id/detail_date"
+            style="@style/DetailTextBig"
+            android:text="July, 20" />
+
+        <TextView
+            android:id="@+id/detail_time"
+            style="@style/DetailTextPlain.Grey"
+            android:text="12:30 PM" />
+
+        <TextView
+            android:id="@+id/detail_city_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <com.whiterabbit.windlocator.detail.WeatherDetailSummary
         android:id="@+id/detail_detail"
@@ -33,54 +39,71 @@
         android:layout_height="wrap_content">
 
 
-<LinearLayout
-    android:id="@+id/detail_content"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/detail_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
 
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/detail_wind_icon"
-        android:src="@drawable/wind_large"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="22"
-        android:id="@+id/detail_speed"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Km/h"
-        android:id="@+id/detail_speed_unit"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/temperature_large"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="32C"
-        android:id="@+id/detail_temperature"/>
-    <ImageView
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:id="@+id/detail_weather_icon"
-        />
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Cloudy"
-        android:id="@+id/detail_weather_desc"/>
+            <ImageView
+                android:id="@+id/detail_wind_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/wind_large" />
 
-</LinearLayout>
-</com.whiterabbit.windlocator.detail.WeatherDetailSummary>
+            <TextView
+                android:id="@+id/detail_speed"
+                style="@style/DetailTextHuge"
+                android:text="22" />
+
+            <TextView
+                android:id="@+id/detail_speed_unit"
+                style="@style/DetailTextPlain.Grey"
+                android:text="Km/h" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/margin_small"
+                    android:src="@drawable/temperature_large" />
+
+                <TextView
+                    android:id="@+id/detail_temperature"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    style="@style/DetailTextPlain"
+                    android:text="32C" />
+
+                <ImageView
+                    android:layout_marginLeft="@dimen/margin_large"
+                    android:id="@+id/detail_weather_icon"
+                    android:src="@drawable/cloudy_small"
+                    android:gravity="center_vertical"
+                    android:layout_marginRight="@dimen/margin_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:id="@+id/detail_weather_desc"
+                    style="@style/DetailTextPlain"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="Cloudy" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.whiterabbit.windlocator.detail.WeatherDetailSummary>
 
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/detail_forecasts"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/detail_forecasts"/>
+        android:layout_height="wrap_content" />
 </LinearLayout>

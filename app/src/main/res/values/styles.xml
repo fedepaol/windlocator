@@ -10,6 +10,7 @@
     <style name="AppThemeTabs" parent="AppTheme">
         <item name="actionBarStyle">@style/MyActionBarTheme</item>
     </style>
+
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">@color/dark_blue</item>
         <item name="tabIndicatorHeight">2dp</item>
@@ -18,6 +19,7 @@
         <item name="tabTextAppearance">@style/MyCustomTabTextAppearance</item>
         <item name="tabSelectedTextColor">@color/white</item>
     </style>
+
     <style name="MyCustomTabTextAppearance" parent="TextAppearance.Design.Tab">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/text_dark</item>
@@ -36,6 +38,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="WeatherDetail">
         <item name="android:layout_marginRight">@dimen/margin_medium</item>
         <item name="android:fontFamily">"sans-serif-light"</item>
@@ -44,13 +47,15 @@
         <item name="android:textSize">@dimen/text_size_small</item>
         <item name="android:textColor">@color/white</item>
     </style>
-   <style name="WindSpeed">
+
+    <style name="WindSpeed">
         <item name="android:fontFamily">"sans-serif-light"</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/text_size_huge</item>
         <item name="android:textColor">@color/white</item>
     </style>
+
     <style name="WeatherCityName">
         <item name="android:fontFamily">"sans-serif-light"</item>
         <item name="android:layout_width">wrap_content</item>
@@ -60,11 +65,13 @@
         <item name="android:paddingTop">@dimen/margin_small</item>
         <item name="android:paddingBottom">@dimen/margin_small</item>
     </style>
+
     <style name="WeatherIcon">
         <item name="android:layout_marginRight">@dimen/margin_xsmall</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="SearchResDetail">
         <item name="android:fontFamily">"sans-serif-light"</item>
         <item name="android:layout_width">wrap_content</item>
@@ -75,14 +82,36 @@
     <style name="SearchResDetail.First">
         <item name="android:textSize">@dimen/text_size_medium</item>
     </style>
+
     <style name="SearchResDetail.Second">
         <item name="android:textSize">@dimen/text_size_small</item>
     </style>
     <!-- DETAIL VIEW -->
     <style name="DetailTextPlain">
+        <item name="android:fontFamily">"sans-serif"</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+
+    <style name="DetailTextBig">
         <item name="android:fontFamily">"sans-serif-light"</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_xlarge</item>
+    </style>
+
+    <style name="DetailTextPlain.Grey">
+        <item name="android:textColor">@color/text_dark</item>
+    </style>
+
+    <style name="DetailTextHuge">
+        <item name="android:fontFamily">"sans-serif-light"</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_huge</item>
     </style>
 </resources>
