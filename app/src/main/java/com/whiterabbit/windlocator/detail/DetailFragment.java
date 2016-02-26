@@ -3,6 +3,7 @@ package com.whiterabbit.windlocator.detail;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import com.whiterabbit.windlocator.Constants;
 import com.whiterabbit.windlocator.R;
 import com.whiterabbit.windlocator.WindLocatorApp;
 import com.whiterabbit.windlocator.model.Weather;
+import com.whiterabbit.windlocator.model.WeatherResults;
 import com.whiterabbit.windlocator.utils.WeatherElementUtils;
 
 import javax.inject.Inject;
@@ -57,7 +59,16 @@ public class DetailFragment extends Fragment implements DetailView {
 
 
         Weather w = getArguments().getParcelable(Constants.WEATHER_EXTRA);
+        mNextDaysForecasts.setHasFixedSize(true);
+
+        // use a linear layout manager
+        LinearLayoutManager layoutManager = new LinearLayoutManager(
+                                                        getActivity().getApplicationContext(),
+                                                        LinearLayoutManager.HORIZONTAL, false);
+        mNextDaysForecasts.setLayoutManager(layoutManager);
+        mNextDaysForecasts.setNestedScrollingEnabled(false);
         mPresenter.setWeather(w);
+
     }
 
     @Override
@@ -66,5 +77,22 @@ public class DetailFragment extends Fragment implements DetailView {
         String label = WeatherElementUtils.getShortWindOrientationFromDegrees(degree,
                                                         getActivity().getApplicationContext());
         mDetailSummary.setWindDirection(degree, label);
+    }
+
+    @Override
+    public void showForecasts(WeatherResults forecasts) {
+        ForecastListAdapter adp = new ForecastListAdapter(getActivity().getApplicationContext(),
+                                                          forecasts);
+        mNextDaysForecasts.setAdapter(adp);
+    }
+
+    @Override
+    public void showLoadingForecasts(boolean loading) {
+        // TODO
+    }
+
+    @Override
+    public void showLoadingForecastsError() {
+
     }
 }
