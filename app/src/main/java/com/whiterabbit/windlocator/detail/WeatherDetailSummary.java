@@ -49,20 +49,21 @@ public class WeatherDetailSummary extends ViewGroup {
         }
         int widthSize = getDefaultSize(0, widthMeasureSpec);
         int heightSize = getDefaultSize(0, heightMeasureSpec);
+        int layoutSize = Math.min(widthSize, heightSize);
 
         measureChild(mTextDirection, widthMeasureSpec, heightMeasureSpec);
 
         int textSize = Math.max(mTextDirection.getMeasuredWidth(), mTextDirection.getMeasuredHeight());
 
         int textPad = getTextPad();
-        int circleDiameter = Math.min(widthSize, heightSize) - 2 * (textSize + textPad);
+        int circleDiameter = layoutSize - 2 * (textSize + textPad);
         int circleSpec = MeasureSpec.makeMeasureSpec(circleDiameter, MeasureSpec.EXACTLY);
         measureChild(mWindCompass, circleSpec, circleSpec);
 
         int contentSpec = MeasureSpec.makeMeasureSpec((int) (circleDiameter * 0.7), MeasureSpec.EXACTLY);
         measureChild(mContent, contentSpec, contentSpec);
 
-        setMeasuredDimension(widthSize, widthSize);
+        setMeasuredDimension(layoutSize, layoutSize);
     }
 
     @Override

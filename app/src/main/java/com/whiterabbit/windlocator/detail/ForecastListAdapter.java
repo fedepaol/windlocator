@@ -15,6 +15,8 @@ import com.whiterabbit.windlocator.model.WeatherResults;
 import com.whiterabbit.windlocator.rest.WeatherCodes;
 import com.whiterabbit.windlocator.utils.WeatherElementUtils;
 
+import java.util.Calendar;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -70,7 +72,12 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
         // - replace the contents of the view with that element
         Weather w = mDataset.getWeathers()[position];
 
-        holder.mDayOfWeek.setText("MON"); // TODO get day of hte week
+        Calendar c = Calendar.getInstance();
+        c.setTime(w.getTime());
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+        String day = mContext.getResources().getStringArray(R.array.week_days)[dayOfWeek];
+        holder.mDayOfWeek.setText(day);
+
         @SuppressLint("DefaultLocale")
         String tempWeather = String.format("%f %s", w.getTemperature(),
                                            WeatherCodes.getWeatherDescFromId(w.getWeatherEnum()));
