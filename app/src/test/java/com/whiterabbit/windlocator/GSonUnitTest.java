@@ -1,7 +1,10 @@
 package com.whiterabbit.windlocator;
 
+import android.provider.MediaStore;
+
 import com.google.gson.Gson;
 import com.whiterabbit.windlocator.inject.ApplicationComponent;
+import com.whiterabbit.windlocator.model.ForecastResults;
 import com.whiterabbit.windlocator.rest.OpenWeatherClient;
 
 import junit.framework.Assert;
@@ -11,6 +14,15 @@ import com.whiterabbit.windlocator.model.WeatherResults;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+
 import static org.mockito.Mockito.mock;
 
 
@@ -19,6 +31,24 @@ import static org.mockito.Mockito.mock;
  */
 public class GSonUnitTest {
     private String nearbyResult;
+    private String forecastResult;
+
+    public static String convertStreamToString(InputStream is) throws Exception {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        StringBuilder sb = new StringBuilder();
+        String line = null;
+        while ((line = reader.readLine()) != null) {
+            sb.append(line).append("\n");
+        }
+        reader.close();
+        return sb.toString();
+    }
+
+    private static File getFileFromPath(Object obj, String fileName) {
+        ClassLoader classLoader = obj.getClass().getClassLoader();
+        URL resource = classLoader.getResource(fileName);
+        return new File(resource.getPath());
+    }
 
     @Before
     public void setup() {
@@ -33,5 +63,14 @@ public class GSonUnitTest {
         Assert.assertEquals(res.getWeathers()[0].getCityName(), "Shcherbinka");
         Assert.assertEquals(res.getWeathers()[0].getId(), 495260);
         mock(ApplicationComponent.class);
+    }
+
+    @Test
+    public void testDeserializeForecasts() throws Exception {
+        Gson gson = OpenWeatherClient.getGSon();
+        File file = getFileFromPath(this, "res/forecasts.json");
+        FileInputStream s = new FileInputStream(file);
+        String json = convertStreamToString(s);
+        ForecastResults res = gson.fromJson(json, ForecastResults.class);
     }
 }

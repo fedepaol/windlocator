@@ -27,6 +27,7 @@ import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 
 
+import com.whiterabbit.windlocator.model.Forecast;
 import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.model.WeatherResults;
 import retrofit.GsonConverterFactory;
@@ -40,6 +41,7 @@ public class OpenWeatherClient {
     public static Gson getGSon() {
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Weather.class, new WeatherDeserializer());
+        builder.registerTypeAdapter(Forecast.class, new ForecastDeserializer());
         return builder.create();
     }
 
