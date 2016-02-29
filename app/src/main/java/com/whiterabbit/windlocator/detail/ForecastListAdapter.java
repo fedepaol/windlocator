@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.whiterabbit.windlocator.R;
+import com.whiterabbit.windlocator.model.Forecast;
+import com.whiterabbit.windlocator.model.ForecastResults;
 import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.model.WeatherResults;
 import com.whiterabbit.windlocator.rest.WeatherCodes;
@@ -20,7 +22,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapter.ViewHolder> {
-    private WeatherResults mDataset;
+    private ForecastResults mDataset;
     private WeatherElementUtils mConversionUtils;
     private Context mContext;
 
@@ -34,8 +36,6 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
         @Bind(R.id.forecast_temp_desc)
         public TextView mWeatherTempDescriptionView;
 
-        public long _id;
-
         public ViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
@@ -43,13 +43,13 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ForecastListAdapter(Context c, WeatherResults data) {
+    public ForecastListAdapter(Context c, ForecastResults data) {
         mContext = c;
         mConversionUtils = new WeatherElementUtils();
         mDataset = data;
     }
 
-    public void updateData(WeatherResults data) {
+    public void updateData(ForecastResults data) {
         mDataset = data;
         notifyDataSetChanged();
     }
@@ -69,25 +69,24 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        Weather w = mDataset.getWeathers()[position];
+        Forecast forecast = mDataset.getForecasts()[position];
 
         Calendar c = Calendar.getInstance();
-        c.setTime(w.getTime());
+        c.setTime(forecast.getTime());
         int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
-        String day = mContext.getResources().getStringArray(R.array.week_days)[dayOfWeek];
+        String day = mContext.getResources().getStringArray(R.array.week_days)[dayOfWeek - 1];
         holder.mDayOfWeek.setText(day);
 
         @SuppressLint("DefaultLocale")
-        String tempWeather = String.format("%f %s", w.getTemperature(),
-                                           WeatherCodes.getWeatherDescFromId(w.getWeatherEnum()));
+        String tempWeather = String.format("%f %s", forecast.getTemperature(),
+                                           WeatherCodes.getWeatherDescFromId(forecast.getWeatherEnum()));
 
         holder.mWeatherTempDescriptionView.setText(tempWeather);
 
         String windOrientation = mConversionUtils
-                .getWindOrientationFromDegrees(w.getWindDegree(), mContext);
+                .getWindOrientationFromDegrees(forecast.getWindDegree(), mContext);
         holder.mWindDirectionView.setText(windOrientation);
-        holder.mWindSpeedView.setText("" + w.getWindSpeed());
-        holder._id = w.getId();
+        holder.mWindSpeedView.setText("" + forecast.getWindSpeed());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
@@ -96,7 +95,7 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
         if (mDataset == null) {
             return 0;
         }
-        return mDataset.getWeathers().length;
+        return mDataset.getForecasts().length;
     }
 
     @Override

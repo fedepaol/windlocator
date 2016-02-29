@@ -32,8 +32,7 @@
     <com.whiterabbit.windlocator.detail.WeatherDetailSummary
         android:id="@+id/detail_detail"
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:layout_height="0dip">
+        android:layout_height="wrap_content">
 
 
         <LinearLayout
@@ -85,7 +84,7 @@
                     android:id="@+id/detail_weather_icon"
                     android:src="@drawable/cloudy_small"
                     android:gravity="center_vertical"
-                    android:layout_marginRight="@dimen/margin_small"
+                    android:layout_marginRight="@dimen/margin_xsmall"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent" />
 

@@ -18,6 +18,7 @@
 package com.whiterabbit.windlocator.rest;
 
 
+import com.whiterabbit.windlocator.model.ForecastResults;
 import com.whiterabbit.windlocator.model.WeatherResults;
 import retrofit.http.GET;
 import retrofit.http.Query;
@@ -30,7 +31,7 @@ public interface OpenWeatherService {
                                                   @Query("cnt") long cnt);
 
     @GET("/data/2.5/forecast")
-    Observable<WeatherResults> getLocationForecasts(@Query("id") long id);
+    Observable<ForecastResults> getLocationForecasts(@Query("id") long id);
 
 
 }

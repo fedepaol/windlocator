@@ -28,6 +28,7 @@ import com.squareup.okhttp.Request;
 
 
 import com.whiterabbit.windlocator.model.Forecast;
+import com.whiterabbit.windlocator.model.ForecastResults;
 import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.model.WeatherResults;
 import retrofit.GsonConverterFactory;
@@ -73,7 +74,7 @@ public class OpenWeatherClient {
         return mClient.listNearbyStations(latitude, longitude, 10);
     }
 
-    public Observable<WeatherResults> getForecasts(long id) {
+    public Observable<ForecastResults> getForecasts(long id) {
         return mClient.getLocationForecasts(id);
     }
 

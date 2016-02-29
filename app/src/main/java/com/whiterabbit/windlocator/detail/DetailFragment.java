@@ -8,13 +8,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.whiterabbit.windlocator.Constants;
 import com.whiterabbit.windlocator.R;
 import com.whiterabbit.windlocator.WindLocatorApp;
+import com.whiterabbit.windlocator.model.ForecastResults;
 import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.model.WeatherResults;
 import com.whiterabbit.windlocator.utils.WeatherElementUtils;
+
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -30,6 +36,21 @@ public class DetailFragment extends Fragment implements DetailView {
 
     @Bind(R.id.detail_forecasts)
     RecyclerView mNextDaysForecasts;
+
+    @Bind(R.id.detail_date)
+    TextView mTodayDate;
+
+    @Bind(R.id.detail_time)
+    TextView mTodayTime;
+
+    @Bind(R.id.detail_speed)
+    TextView mWindSpeed;
+
+    @Bind(R.id.detail_weather_desc)
+    TextView mWeatherDesc;
+
+    @Bind(R.id.detail_wind_icon)
+    ImageView mWeatherIcon;
 
     public static DetailFragment createInstance(Weather w) {
         DetailFragment res = new DetailFragment();
@@ -77,10 +98,24 @@ public class DetailFragment extends Fragment implements DetailView {
         String label = WeatherElementUtils.getShortWindOrientationFromDegrees(degree,
                                                         getActivity().getApplicationContext());
         mDetailSummary.setWindDirection(degree, label);
+        setTodayValues(w.getTime());
+        mWindSpeed.setText(String.format("%f", w.getWindSpeed()));
+    }
+
+    private void setTodayValues(Date today) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(today);
+        int month = c.get(Calendar.MONTH);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        int hour = c.get(Calendar.HOUR);
+        int minutes = c.get(Calendar.MINUTE);
+        String dateString = String.format("July, %d", day); // TODO Month
+        mTodayDate.setText(dateString);
+        mTodayTime.setText(String.format("%02d:%02d", hour, minutes));
     }
 
     @Override
-    public void showForecasts(WeatherResults forecasts) {
+    public void showForecasts(ForecastResults forecasts) {
         ForecastListAdapter adp = new ForecastListAdapter(getActivity().getApplicationContext(),
                                                           forecasts);
         mNextDaysForecasts.setAdapter(adp);
