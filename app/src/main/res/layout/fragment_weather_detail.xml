@@ -44,7 +44,6 @@
 
 
             <ImageView
-                android:id="@+id/detail_wind_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/wind_large" />
@@ -82,7 +81,6 @@
                 <ImageView
                     android:layout_marginLeft="@dimen/margin_large"
                     android:id="@+id/detail_weather_icon"
-                    android:src="@drawable/cloudy_small"
                     android:gravity="center_vertical"
                     android:layout_marginRight="@dimen/margin_xsmall"
                     android:layout_width="wrap_content"

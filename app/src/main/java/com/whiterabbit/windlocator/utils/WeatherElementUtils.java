@@ -13,7 +13,7 @@ public class WeatherElementUtils {
     DateTimeFormatter fmt;
 
     public WeatherElementUtils() {
-        fmt =  DateTimeFormat.forPattern("HH:mm:ss");
+        fmt =  DateTimeFormat.forPattern("HH:mm");
     }
 
     public String timeToStringTime(long time) {

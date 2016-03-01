@@ -68,7 +68,6 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
 
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
     public WeatherListAdapter(ListElemClick listener, Context c) {
         mContext = c;
         mConversionUtils = new WeatherElementUtils();

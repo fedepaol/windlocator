@@ -17,6 +17,7 @@ import com.whiterabbit.windlocator.WindLocatorApp;
 import com.whiterabbit.windlocator.model.ForecastResults;
 import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.model.WeatherResults;
+import com.whiterabbit.windlocator.rest.WeatherCodes;
 import com.whiterabbit.windlocator.utils.WeatherElementUtils;
 
 import java.util.Calendar;
@@ -30,6 +31,9 @@ import butterknife.ButterKnife;
 public class DetailFragment extends Fragment implements DetailView {
     @Inject
     DetailPresenter mPresenter;
+
+    @Inject
+    WeatherElementUtils mElemUtils;
 
     @Bind(R.id.detail_detail)
     WeatherDetailSummary mDetailSummary;
@@ -49,8 +53,11 @@ public class DetailFragment extends Fragment implements DetailView {
     @Bind(R.id.detail_weather_desc)
     TextView mWeatherDesc;
 
-    @Bind(R.id.detail_wind_icon)
+    @Bind(R.id.detail_weather_icon)
     ImageView mWeatherIcon;
+
+    @Bind(R.id.detail_temperature)
+    TextView mTemperature;
 
     public static DetailFragment createInstance(Weather w) {
         DetailFragment res = new DetailFragment();
@@ -99,7 +106,11 @@ public class DetailFragment extends Fragment implements DetailView {
                                                         getActivity().getApplicationContext());
         mDetailSummary.setWindDirection(degree, label);
         setTodayValues(w.getTime());
-        mWindSpeed.setText(String.format("%f", w.getWindSpeed()));
+        mWindSpeed.setText(String.format("%d", (int) w.getWindSpeed()));
+        mWeatherIcon.setImageResource(WeatherCodes.getIconFromWeatherDesc(w.getWeatherEnum()));
+        mTemperature.setText(String.format("%d", (int) w.getTemperature()));
+        mWeatherDesc.setText(WeatherCodes.getWeatherDescFromId(w.getWeatherEnum()));
+
     }
 
     private void setTodayValues(Date today) {
@@ -109,9 +120,9 @@ public class DetailFragment extends Fragment implements DetailView {
         int day = c.get(Calendar.DAY_OF_MONTH);
         int hour = c.get(Calendar.HOUR);
         int minutes = c.get(Calendar.MINUTE);
-        String dateString = String.format("July, %d", day); // TODO Month
+        String dateString = String.format("Sep, %d", day); // TODO Month
         mTodayDate.setText(dateString);
-        mTodayTime.setText(String.format("%02d:%02d", hour, minutes));
+        mTodayTime.setText(mElemUtils.timeToStringTime(today.getTime()));
     }
 
     @Override
