@@ -4,7 +4,7 @@ import android.content.Context;
 import android.location.Address;
 
 import com.whiterabbit.windlocator.model.Weather;
-import com.whiterabbit.windlocator.rest.OpenWeatherClient;
+import com.whiterabbit.windlocator.weatherclient.OpenWeatherClient;
 
 import javax.inject.Inject;
 

@@ -1,4 +1,4 @@
-package com.whiterabbit.windlocator.rest;
+package com.whiterabbit.windlocator.weatherclient;
 
 import com.whiterabbit.windlocator.R;
 

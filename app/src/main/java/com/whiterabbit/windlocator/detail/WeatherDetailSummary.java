@@ -39,7 +39,11 @@ public class WeatherDetailSummary extends ViewGroup {
     }
 
     private int getTextPad() {
-       return (int) getResources().getDisplayMetrics().density * 25;
+       return (int) getResources().getDisplayMetrics().density * 35;
+    }
+
+    private int getSpotPad() {
+        return (int) getResources().getDisplayMetrics().density * 5;
     }
 
     @Override
@@ -86,6 +90,10 @@ public class WeatherDetailSummary extends ViewGroup {
                           directionX + mTextDirection.getMeasuredWidth() / 2,
                           directionY + mTextDirection.getMeasuredHeight() / 2);
 
+        int spotCircleRadius = mWindCompass.getMeasuredWidth() / 2 + getSpotPad();
+        int spotX =  (int) (circleCenterX + Math.cos(direction) * circleRadius);
+        int spotY = (int) (circleCenterY + Math.sin(direction) * circleRadius);
+
 
         int contentLeft = (int) (windLeft + 0.15 * mWindCompass.getMeasuredWidth());
         int contentRight = contentLeft + mContent.getMeasuredWidth();
@@ -95,7 +103,7 @@ public class WeatherDetailSummary extends ViewGroup {
     }
 
     public void setWindDirection(double degree, String text) {
-        mWindCompass.setRotation((int) degree - 45); // -45 because the pic I got is rotated by 45
+        //mWindCompass.setRotation((int) degree - 45); // -45 because the pic I got is rotated by 45
         direction = degree / 360.0 * ( 2 * Math.PI) - Math.PI / 2;
         mTextDirection.setText(text);
         invalidate();

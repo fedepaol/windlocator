@@ -9,7 +9,7 @@ import android.content.SharedPreferences;
 
 import com.whiterabbit.windlocator.WindLocatorApp;
 import com.whiterabbit.windlocator.schedule.SchedulersProvider;
-import com.whiterabbit.windlocator.rest.OpenWeatherClient;
+import com.whiterabbit.windlocator.weatherclient.OpenWeatherClient;
 import com.whiterabbit.windlocator.storage.WeatherDbHelperExt;
 import com.whiterabbit.windlocator.storage.WeatherFacade;
 

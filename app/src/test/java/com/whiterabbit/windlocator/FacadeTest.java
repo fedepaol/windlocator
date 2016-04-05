@@ -8,7 +8,7 @@ import com.whiterabbit.windlocator.inject.DaggerApplicationComponent;
 import com.whiterabbit.windlocator.inject.MockModule;
 import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.model.WeatherResults;
-import com.whiterabbit.windlocator.rest.OpenWeatherClient;
+import com.whiterabbit.windlocator.weatherclient.OpenWeatherClient;
 import com.whiterabbit.windlocator.storage.WeatherDbHelperExt;
 import com.whiterabbit.windlocator.storage.WeatherFacade;
 

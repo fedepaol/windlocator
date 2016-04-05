@@ -16,8 +16,7 @@ import com.whiterabbit.windlocator.R;
 import com.whiterabbit.windlocator.WindLocatorApp;
 import com.whiterabbit.windlocator.model.ForecastResults;
 import com.whiterabbit.windlocator.model.Weather;
-import com.whiterabbit.windlocator.model.WeatherResults;
-import com.whiterabbit.windlocator.rest.WeatherCodes;
+import com.whiterabbit.windlocator.weatherclient.WeatherCodes;
 import com.whiterabbit.windlocator.utils.WeatherElementUtils;
 
 import java.util.Calendar;
@@ -86,7 +85,6 @@ public class DetailFragment extends Fragment implements DetailView {
                 .build().inject(this);
 
 
-        Weather w = getArguments().getParcelable(Constants.WEATHER_EXTRA);
         mNextDaysForecasts.setHasFixedSize(true);
 
         // use a linear layout manager
@@ -95,7 +93,6 @@ public class DetailFragment extends Fragment implements DetailView {
                                                         LinearLayoutManager.HORIZONTAL, false);
         mNextDaysForecasts.setLayoutManager(layoutManager);
         mNextDaysForecasts.setNestedScrollingEnabled(false);
-        mPresenter.setWeather(w);
 
     }
 
@@ -110,7 +107,13 @@ public class DetailFragment extends Fragment implements DetailView {
         mWeatherIcon.setImageResource(WeatherCodes.getIconFromWeatherDesc(w.getWeatherEnum()));
         mTemperature.setText(String.format("%d", (int) w.getTemperature()));
         mWeatherDesc.setText(WeatherCodes.getWeatherDescFromId(w.getWeatherEnum()));
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Weather w = getArguments().getParcelable(Constants.WEATHER_EXTRA);
+        mPresenter.setWeather(w);
     }
 
     private void setTodayValues(Date today) {

@@ -11,9 +11,7 @@ import android.widget.TextView;
 import com.whiterabbit.windlocator.R;
 import com.whiterabbit.windlocator.model.Forecast;
 import com.whiterabbit.windlocator.model.ForecastResults;
-import com.whiterabbit.windlocator.model.Weather;
-import com.whiterabbit.windlocator.model.WeatherResults;
-import com.whiterabbit.windlocator.rest.WeatherCodes;
+import com.whiterabbit.windlocator.weatherclient.WeatherCodes;
 import com.whiterabbit.windlocator.utils.WeatherElementUtils;
 
 import java.util.Calendar;

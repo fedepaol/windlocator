@@ -1,7 +1,7 @@
 package com.whiterabbit.windlocator.detail;
 
 import com.whiterabbit.windlocator.model.Weather;
-import com.whiterabbit.windlocator.rest.OpenWeatherClient;
+import com.whiterabbit.windlocator.weatherclient.OpenWeatherClient;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

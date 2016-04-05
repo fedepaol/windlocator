@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.whiterabbit.windlocator.FakeSchedulersProvider;
-import com.whiterabbit.windlocator.rest.OpenWeatherClient;
+import com.whiterabbit.windlocator.weatherclient.OpenWeatherClient;
 import com.whiterabbit.windlocator.schedule.SchedulersProvider;
 import com.whiterabbit.windlocator.storage.WeatherDbHelperExt;
 

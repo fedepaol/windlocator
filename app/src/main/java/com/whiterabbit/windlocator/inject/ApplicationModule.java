@@ -7,7 +7,7 @@ import android.preference.PreferenceManager;
 
 import com.whiterabbit.windlocator.schedule.RealSchedulersProvider;
 import com.whiterabbit.windlocator.schedule.SchedulersProvider;
-import com.whiterabbit.windlocator.rest.OpenWeatherClient;
+import com.whiterabbit.windlocator.weatherclient.OpenWeatherClient;
 import com.whiterabbit.windlocator.storage.WeatherDbHelperExt;
 
 import javax.inject.Singleton;

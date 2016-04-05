@@ -4,7 +4,7 @@ package com.whiterabbit.windlocator.mainactivity;
 import android.content.Context;
 
 import com.whiterabbit.windlocator.schedule.SchedulersProvider;
-import com.whiterabbit.windlocator.rest.OpenWeatherClient;
+import com.whiterabbit.windlocator.weatherclient.OpenWeatherClient;
 import com.whiterabbit.windlocator.storage.WeatherFacade;
 
 import dagger.Module;

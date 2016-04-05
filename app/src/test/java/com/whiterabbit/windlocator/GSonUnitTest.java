@@ -1,11 +1,9 @@
 package com.whiterabbit.windlocator;
 
-import android.provider.MediaStore;
-
 import com.google.gson.Gson;
 import com.whiterabbit.windlocator.inject.ApplicationComponent;
 import com.whiterabbit.windlocator.model.ForecastResults;
-import com.whiterabbit.windlocator.rest.OpenWeatherClient;
+import com.whiterabbit.windlocator.weatherclient.OpenWeatherClient;
 
 import junit.framework.Assert;
 
@@ -14,11 +12,9 @@ import com.whiterabbit.windlocator.model.WeatherResults;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;

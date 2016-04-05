@@ -2,11 +2,8 @@ package com.whiterabbit.windlocator.detail;
 
 
 
-import com.whiterabbit.windlocator.mainactivity.MainPresenterImpl;
-import com.whiterabbit.windlocator.rest.OpenWeatherClient;
+import com.whiterabbit.windlocator.weatherclient.OpenWeatherClient;
 import com.whiterabbit.windlocator.utils.WeatherElementUtils;
-
-import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;

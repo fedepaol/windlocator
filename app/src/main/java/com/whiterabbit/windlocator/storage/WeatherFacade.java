@@ -5,7 +5,7 @@ import android.location.Address;
 
 import com.google.android.gms.location.LocationRequest;
 import com.whiterabbit.windlocator.model.WeatherResults;
-import com.whiterabbit.windlocator.rest.OpenWeatherClient;
+import com.whiterabbit.windlocator.weatherclient.OpenWeatherClient;
 import com.whiterabbit.windlocator.schedule.SchedulersProvider;
 
 import java.util.List;
@@ -14,7 +14,6 @@ import javax.inject.Inject;
 
 import pl.charmas.android.reactivelocation.ReactiveLocationProvider;
 import rx.Observable;
-import rx.schedulers.Schedulers;
 import rx.subjects.BehaviorSubject;
 
 /**
