@@ -5,7 +5,7 @@
         android:paddingTop="@dimen/margin_med_large"
         android:paddingBottom="@dimen/margin_med_large"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
     <LinearLayout
         android:gravity="center"
         android:orientation="horizontal"

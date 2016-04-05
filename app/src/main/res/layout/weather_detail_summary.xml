@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ImageView
@@ -7,17 +8,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/detail_wind_compass"
         android:scaleType="centerCrop"
-        android:src="@drawable/wind_direction_compass"/>
+        app:srcCompat="@drawable/compass"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
+        android:background="@drawable/spot"
+        android:gravity="center"
         android:text="NE"
         android:id="@+id/detail_weather_direction"/>
-   <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/ic_launcher"
-        android:id="@+id/placeholder"
-       />
 </merge>
