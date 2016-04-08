@@ -17,8 +17,8 @@
         style="@style/ForecastText"
         android:text="South West"
         android:id="@+id/forecast_wind_direction"/>
-    <TextView
+    <!--TextView
         style="@style/ForecastText.White"
         android:text="+17 Sunny"
-        android:id="@+id/forecast_temp_desc"/>
+        android:id="@+id/forecast_temp_desc"/-->
 </LinearLayout>

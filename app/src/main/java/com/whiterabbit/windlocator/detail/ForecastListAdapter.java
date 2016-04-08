@@ -31,9 +31,9 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
         public TextView mWindSpeedView;
         @Bind(R.id.forecast_wind_direction)
         public TextView mWindDirectionView;
-        @Bind(R.id.forecast_temp_desc)
+        /*@Bind(R.id.forecast_temp_desc)
         public TextView mWeatherTempDescriptionView;
-
+        */
         public ViewHolder(View v) {
             super(v);
             ButterKnife.bind(this, v);
@@ -75,12 +75,13 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
         String day = mContext.getResources().getStringArray(R.array.week_days)[dayOfWeek - 1];
         holder.mDayOfWeek.setText(day);
 
+/*
         @SuppressLint("DefaultLocale")
         String tempWeather = String.format("%f %s", forecast.getTemperature(),
-                                           WeatherCodes.getWeatherDescFromId(forecast.getWeatherEnum()));
+                                           geWeatherCodes.getWeatherDescFromId(forecast.getWeatherEnum()));
 
         holder.mWeatherTempDescriptionView.setText(tempWeather);
-
+*/
         String windOrientation = mConversionUtils
                 .getWindOrientationFromDegrees(forecast.getWindDegree(), mContext);
         holder.mWindDirectionView.setText(windOrientation);

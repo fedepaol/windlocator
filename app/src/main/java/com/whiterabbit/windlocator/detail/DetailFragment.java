@@ -86,7 +86,7 @@ public class DetailFragment extends Fragment implements DetailView {
                 .build().inject(this);
 
 
-        mNextDaysForecasts.setHasFixedSize(true);
+        //mNextDaysForecasts.setHasFixedSize(true);
 
         // use a linear layout manager
         LinearLayoutManager layoutManager = new LinearLayoutManager(
@@ -114,7 +114,6 @@ public class DetailFragment extends Fragment implements DetailView {
         super.onResume();
         Weather w = getArguments().getParcelable(Constants.WEATHER_EXTRA);
         mPresenter.setWeather(w);
-
     }
 
     private void setTodayValues(Date today) {
@@ -131,6 +130,7 @@ public class DetailFragment extends Fragment implements DetailView {
 
     @Override
     public void showForecasts(ForecastResults forecasts) {
+        Log.d("FEDE", "Forecasts " + forecasts.getForecasts()[0].getWindDegree());
         ForecastListAdapter adp = new ForecastListAdapter(getActivity().getApplicationContext(),
                                                           forecasts);
         mNextDaysForecasts.setAdapter(adp);

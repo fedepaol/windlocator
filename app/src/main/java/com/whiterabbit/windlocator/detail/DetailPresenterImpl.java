@@ -1,5 +1,7 @@
 package com.whiterabbit.windlocator.detail;
 
+import android.util.Log;
+
 import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.weatherclient.OpenWeatherClient;
 
@@ -27,6 +29,7 @@ public class DetailPresenterImpl implements DetailPresenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mView::showForecasts,
                         e -> {
+                            Log.d("FEDE", "error forecasts");
                             mView.showLoadingForecasts(false);
                             mView.showLoadingForecastsError();
                         },
