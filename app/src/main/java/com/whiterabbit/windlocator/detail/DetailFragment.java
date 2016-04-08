@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -93,7 +94,6 @@ public class DetailFragment extends Fragment implements DetailView {
                                                         LinearLayoutManager.HORIZONTAL, false);
         mNextDaysForecasts.setLayoutManager(layoutManager);
         mNextDaysForecasts.setNestedScrollingEnabled(false);
-
     }
 
     @Override
@@ -114,6 +114,7 @@ public class DetailFragment extends Fragment implements DetailView {
         super.onResume();
         Weather w = getArguments().getParcelable(Constants.WEATHER_EXTRA);
         mPresenter.setWeather(w);
+
     }
 
     private void setTodayValues(Date today) {
