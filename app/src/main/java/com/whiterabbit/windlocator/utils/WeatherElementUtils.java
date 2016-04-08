@@ -54,25 +54,25 @@ public class WeatherElementUtils {
         if (degrees <= 23 || degrees > 338) {
             return c.getString(R.string.short_north);
         }
-        if (degrees >= 23 || degrees < 68) {
+        if (degrees >= 23 && degrees < 68) {
             return c.getString(R.string.short_north_east);
         }
-        if (degrees >= 68 || degrees < 113) {
+        if (degrees >= 68 && degrees < 113) {
             return c.getString(R.string.short_east);
         }
-        if (degrees >= 113 || degrees < 158) {
+        if (degrees >= 113 && degrees < 158) {
             return c.getString(R.string.short_south_east);
         }
-        if (degrees >= 158 || degrees < 203) {
+        if (degrees >= 158 && degrees < 203) {
             return c.getString(R.string.short_south);
         }
-        if (degrees >= 203 || degrees < 248) {
+        if (degrees >= 203 && degrees < 248) {
             return c.getString(R.string.short_south_west);
         }
-        if (degrees >= 248 || degrees < 293) {
+        if (degrees >= 248 && degrees < 293) {
             return c.getString(R.string.short_west);
         }
-        if (degrees >= 293 || degrees < 338) {
+        if (degrees >= 293 && degrees < 338) {
             return c.getString(R.string.short_north_west);
         }
         return "";
