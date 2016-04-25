@@ -3,7 +3,9 @@ package com.whiterabbit.windlocator.storage;
 import android.content.Context;
 import android.location.Address;
 
+import com.google.android.gms.common.data.DataBufferObserver;
 import com.google.android.gms.location.LocationRequest;
+import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.model.WeatherResults;
 import com.whiterabbit.windlocator.weatherclient.OpenWeatherClient;
 import com.whiterabbit.windlocator.schedule.SchedulersProvider;
@@ -41,12 +43,15 @@ public class WeatherFacade {
                 .setNumUpdates(1)
                 .setInterval(100);
 
-        Observable<WeatherResults> observable =
+        Observable<List<Weather>> observable =
                 mLocationProvider.getUpdatedLocation(request)
                         .first()
                         .observeOn(mSchedulers.provideBackgroundScheduler())
                         .flatMap(location -> mRestClient.getNearbyWeather(location.getLatitude(),
-                                                                          location.getLongitude()));
+                                                                          location.getLongitude()))
+                        .flatMap(w -> Observable.from(w.getWeathers()))
+                        .distinct(Weather::getCityName)
+                        .toList();
 
         observable.subscribeOn(mSchedulers.provideBackgroundScheduler())
                 .observeOn(mSchedulers.provideBackgroundScheduler())

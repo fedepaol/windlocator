@@ -94,10 +94,16 @@ public class DetailFragment extends Fragment implements DetailView {
                                                         LinearLayoutManager.HORIZONTAL, false);
         mNextDaysForecasts.setLayoutManager(layoutManager);
         mNextDaysForecasts.setNestedScrollingEnabled(false);
+
+        Weather w = getArguments().getParcelable(Constants.WEATHER_EXTRA);
+        Log.d("FEDE", "Presenter set weather");
+        mPresenter.setWeather(w);
     }
 
     @Override
     public void showWeather(Weather w) {
+        Log.d("FEDE", "show weather before");
+
         double degree = w.getWindDegree();
         String label = WeatherElementUtils.getShortWindOrientationFromDegrees(degree,
                                                         getActivity().getApplicationContext());
@@ -107,13 +113,7 @@ public class DetailFragment extends Fragment implements DetailView {
         mWeatherIcon.setImageResource(WeatherCodes.getIconFromWeatherDesc(w.getWeatherEnum()));
         mTemperature.setText(String.format("%d", (int) w.getTemperature()));
         mWeatherDesc.setText(WeatherCodes.getWeatherDescFromId(w.getWeatherEnum()));
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Weather w = getArguments().getParcelable(Constants.WEATHER_EXTRA);
-        mPresenter.setWeather(w);
+        Log.d("FEDE", "show weather after");
     }
 
     private void setTodayValues(Date today) {

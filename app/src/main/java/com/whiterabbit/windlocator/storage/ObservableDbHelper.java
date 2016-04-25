@@ -3,6 +3,8 @@ package com.whiterabbit.windlocator.storage;
 import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.model.WeatherResults;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import rx.Observable;
@@ -26,12 +28,11 @@ public class ObservableDbHelper {
         return mDbHelper.getLastNearbyWeather();
     }
 
-    public void insertNearbyWeather(WeatherResults nearby) {
+    public void insertNearbyWeather(List<Weather> nearby) {
         mDbHelper.open();
-        Weather[] weathers = nearby.getWeathers();
+
         mDbHelper.removeAllNearbyWeather();
-        for (int i = 0; i < weathers.length; i++) {
-            Weather localWeather = weathers[i];
+        for (Weather localWeather : nearby) {
             mDbHelper.addNearbyWeather(localWeather.getTime(),
                                         localWeather.getWindSpeed(),
                                         localWeather.getWindDegree(),
@@ -43,6 +44,9 @@ public class ObservableDbHelper {
                                         localWeather.getId());
         }
         mDbHelper.close();
+
+        Weather[] weathers = new Weather[nearby.size()];
+        nearby.toArray(weathers);       // this could be more efficient
         WeatherResults results = new WeatherResults(weathers);
         mSubject.onNext(results);
     }
