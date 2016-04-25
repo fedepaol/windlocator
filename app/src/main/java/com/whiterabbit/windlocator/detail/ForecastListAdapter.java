@@ -15,12 +15,13 @@ import com.whiterabbit.windlocator.weatherclient.WeatherCodes;
 import com.whiterabbit.windlocator.utils.WeatherElementUtils;
 
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapter.ViewHolder> {
-    private ForecastResults mDataset;
+    private List<Forecast> mDataset;
     private WeatherElementUtils mConversionUtils;
     private Context mContext;
 
@@ -41,15 +42,10 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public ForecastListAdapter(Context c, ForecastResults data) {
+    public ForecastListAdapter(Context c, List<Forecast> data) {
         mContext = c;
         mConversionUtils = new WeatherElementUtils();
         mDataset = data;
-    }
-
-    public void updateData(ForecastResults data) {
-        mDataset = data;
-        notifyDataSetChanged();
     }
 
     @Override
@@ -67,7 +63,7 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
-        Forecast forecast = mDataset.getForecasts()[position];
+        Forecast forecast = mDataset.get(position);
 
         Calendar c = Calendar.getInstance();
         c.setTime(forecast.getTime());
@@ -94,7 +90,7 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
         if (mDataset == null) {
             return 0;
         }
-        return mDataset.getForecasts().length;
+        return mDataset.size();
     }
 
     @Override

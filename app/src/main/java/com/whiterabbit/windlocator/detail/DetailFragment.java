@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.whiterabbit.windlocator.Constants;
 import com.whiterabbit.windlocator.R;
 import com.whiterabbit.windlocator.WindLocatorApp;
+import com.whiterabbit.windlocator.model.Forecast;
 import com.whiterabbit.windlocator.model.ForecastResults;
 import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.weatherclient.WeatherCodes;
@@ -22,6 +23,7 @@ import com.whiterabbit.windlocator.utils.WeatherElementUtils;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -129,8 +131,7 @@ public class DetailFragment extends Fragment implements DetailView {
     }
 
     @Override
-    public void showForecasts(ForecastResults forecasts) {
-        Log.d("FEDE", "Forecasts " + forecasts.getForecasts()[0].getWindDegree());
+    public void showForecasts(List<Forecast> forecasts) {
         ForecastListAdapter adp = new ForecastListAdapter(getActivity().getApplicationContext(),
                                                           forecasts);
         mNextDaysForecasts.setAdapter(adp);

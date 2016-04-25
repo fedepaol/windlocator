@@ -31,6 +31,9 @@ import com.whiterabbit.windlocator.model.Forecast;
 import com.whiterabbit.windlocator.model.ForecastResults;
 import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.model.WeatherResults;
+
+import java.util.List;
+
 import retrofit.GsonConverterFactory;
 import retrofit.Retrofit;
 import retrofit.RxJavaCallAdapterFactory;
@@ -74,8 +77,11 @@ public class OpenWeatherClient {
         return mClient.listNearbyStations(latitude, longitude, 10);
     }
 
-    public Observable<ForecastResults> getForecasts(long id) {
-        return mClient.getLocationForecasts(id);
+    public Observable<List<Forecast>> getForecasts(long id) {
+        return mClient.getLocationForecasts(id)
+                .flatMap(forecasts -> Observable.from(forecasts.getForecasts()))
+                .take(7)
+                .toList();
     }
 
 }
