@@ -55,6 +55,11 @@
             android:text="South East"
             android:layout_height="wrap_content"
             android:id="@+id/wind_direction" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/favourite"
+            android:src="@drawable/ic_star_black_24dp"/>
     </LinearLayout>
     <TextView style="@style/WindSpeed"
         android:layout_alignParentTop="true"
@@ -70,4 +75,5 @@
         android:layout_below="@id/wind_speed"
         android:layout_alignRight="@id/wind_speed"
         android:text="Km/h" />
+
 </RelativeLayout>

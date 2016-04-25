@@ -42,4 +42,29 @@ public class WeatherDbHelperExt extends  WeatherDbHelper {
         close();
         return new WeatherResults(weathers);
     }
+
+    public boolean isFavourite(long id) {
+        Cursor res = mDb.query(FAVORITEWEATHER_TABLE, new String[] {
+                ROW_ID,
+                FAVORITEWEATHER_ID_COLUMN
+        }, FAVORITEWEATHER_ID_COLUMN + " = " + id, null, null, null, null);
+
+        return res.getCount() > 0;
+    }
+
+    public void setFavourite(Weather w) {
+        addFavoriteWeather(w.getTime(),
+                           w.getWindSpeed(),
+                           w.getWindDegree(),
+                           w.getTemperature(),
+                           w.getCityName(),
+                           w.getLatitude(),
+                           w.getLongitude(),
+                           w.getWeatherEnum(),
+                           w.getId());
+    }
+
+    public boolean removeFromFavourite(long id) {
+        return mDb.delete(FAVORITEWEATHER_TABLE, FAVORITEWEATHER_ID_COLUMN + " = " + id, null) > 0;
+    }
 }

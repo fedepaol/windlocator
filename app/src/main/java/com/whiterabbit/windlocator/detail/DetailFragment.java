@@ -1,6 +1,7 @@
 package com.whiterabbit.windlocator.detail;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -67,6 +68,18 @@ public class DetailFragment extends Fragment implements DetailView {
         b.putParcelable(Constants.WEATHER_EXTRA, w);
         res.setArguments(b);
         return res;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                .detectDiskReads()
+                .detectDiskWrites()
+                .detectNetwork()   // or .detectAll() for all detectable problems
+                .penaltyLog()
+                .build());
+
     }
 
     @Nullable
