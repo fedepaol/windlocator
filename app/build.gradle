@@ -59,4 +59,5 @@ dependencies {
     compile 'io.reactivex:rxjava-debug:1.0.3'
     compile 'net.danlew:android.joda:2.8.2'
     compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:0.3.0'
+    testCompile "org.robolectric:robolectric:3.0"
 }

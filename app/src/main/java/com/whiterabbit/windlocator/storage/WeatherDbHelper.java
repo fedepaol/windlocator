@@ -10,6 +10,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.util.Log;
 
 import java.util.Date;
@@ -44,7 +45,7 @@ public class WeatherDbHelper {
 
     public static final String ROW_ID = "_id";
 
-    
+
     // -------------- NEARBYWEATHER DEFINITIONS ------------
     public static final String NEARBYWEATHER_TABLE = "NearbyWeather";
     
@@ -105,8 +106,14 @@ public class WeatherDbHelper {
     
     public static final String FAVORITEWEATHER_ID_COLUMN = "id";
     public static final int FAVORITEWEATHER_ID_COLUMN_POSITION = 9;
-    
-    
+
+    private static final String NEARBY_QUERY  = "SELECT n.*, f." + FAVORITEWEATHER_ID_COLUMN +
+                                                " FROM " + NEARBYWEATHER_TABLE + " n " +
+                                                "LEFT OUTER JOIN " + FAVORITEWEATHER_TABLE + " f ON f." +
+                                                FAVORITEWEATHER_ID_COLUMN + " = n." +
+                                                NEARBYWEATHER_ID_COLUMN;
+
+
 
 
     // -------- TABLES CREATION ----------
@@ -181,18 +188,11 @@ public class WeatherDbHelper {
     }
 
     public Cursor getAllNearbyWeather(){
-    	return mDb.query(NEARBYWEATHER_TABLE, new String[] {
-                         ROW_ID,
-                         NEARBYWEATHER_TIME_COLUMN,
-                         NEARBYWEATHER_WINDSPEED_COLUMN,
-                         NEARBYWEATHER_WINDDEGREE_COLUMN,
-                         NEARBYWEATHER_TEMPERATURE_COLUMN,
-                         NEARBYWEATHER_CITYNAME_COLUMN,
-                         NEARBYWEATHER_LATITUDE_COLUMN,
-                         NEARBYWEATHER_LONGITUDE_COLUMN,
-                         NEARBYWEATHER_WEATHERENUM_COLUMN,
-                         NEARBYWEATHER_ID_COLUMN
-                         }, null, null, null, null, null);
+
+
+
+        return mDb.rawQuery(NEARBY_QUERY, null);
+
     }
 
     public Cursor getNearbyWeather(long rowIndex) {

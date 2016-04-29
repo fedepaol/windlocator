@@ -13,10 +13,27 @@ public class WeatherDbHelperExt extends  WeatherDbHelper {
         super(context);
     }
 
+    Weather getWeatherFromCursor(Cursor c) {
+        return new Weather(c.getLong(NEARBYWEATHER_ID_COLUMN_POSITION),
+                new Date(c.getLong(NEARBYWEATHER_TIME_COLUMN_POSITION)),
+                c.getDouble(NEARBYWEATHER_WINDSPEED_COLUMN_POSITION),
+                c.getDouble(NEARBYWEATHER_WINDDEGREE_COLUMN_POSITION),
+                c.getDouble(NEARBYWEATHER_TEMPERATURE_COLUMN_POSITION),
+                c.getString(NEARBYWEATHER_CITYNAME_COLUMN_POSITION),
+                c.getDouble(NEARBYWEATHER_LATITUDE_COLUMN_POSITION),
+                c.getDouble(NEARBYWEATHER_LONGITUDE_COLUMN_POSITION),
+                c.getInt(NEARBYWEATHER_WEATHERENUM_COLUMN_POSITION));
+    }
+
+    boolean isFavouriteWeatherFromCursor(Cursor c) {
+        return !c.isNull(FAVORITEWEATHER_WEATHERENUM_COLUMN_POSITION + 1);
+    }
+
     public WeatherResults getLastNearbyWeather() {
         open();
         Cursor c = getAllNearbyWeather();
         Weather[] weathers = new Weather[c.getCount()];
+        boolean[] favorites = new boolean[c.getCount()];
         if (weathers.length == 0) {
             WeatherResults res = new WeatherResults(weathers);
             c.close();
@@ -26,21 +43,15 @@ public class WeatherDbHelperExt extends  WeatherDbHelper {
         c.moveToFirst();
         int count = 0;
         do {
-            Weather w = new Weather(c.getLong(NEARBYWEATHER_ID_COLUMN_POSITION),
-                                    new Date(c.getLong(NEARBYWEATHER_TIME_COLUMN_POSITION)),
-                   c.getDouble(NEARBYWEATHER_WINDSPEED_COLUMN_POSITION),
-                    c.getDouble(NEARBYWEATHER_WINDDEGREE_COLUMN_POSITION),
-                    c.getDouble(NEARBYWEATHER_TEMPERATURE_COLUMN_POSITION),
-                    c.getString(NEARBYWEATHER_CITYNAME_COLUMN_POSITION),
-                    c.getDouble(NEARBYWEATHER_LATITUDE_COLUMN_POSITION),
-                    c.getDouble(NEARBYWEATHER_LONGITUDE_COLUMN_POSITION),
-                    c.getInt(NEARBYWEATHER_WEATHERENUM_COLUMN_POSITION));
-
+            Weather w = getWeatherFromCursor(c);
+            if (isFavouriteWeatherFromCursor(c)) {
+                favorites[count] = true;
+            }
             weathers[count++] = w;
         } while (c.moveToNext());
         c.close();
         close();
-        return new WeatherResults(weathers);
+        return new WeatherResults(weathers, favorites);
     }
 
     public boolean isFavourite(long id) {
@@ -49,7 +60,9 @@ public class WeatherDbHelperExt extends  WeatherDbHelper {
                 FAVORITEWEATHER_ID_COLUMN
         }, FAVORITEWEATHER_ID_COLUMN + " = " + id, null, null, null, null);
 
-        return res.getCount() > 0;
+        boolean result = res.getCount() > 0;
+        res.close();
+        return result;
     }
 
     public void setFavourite(Weather w) {
