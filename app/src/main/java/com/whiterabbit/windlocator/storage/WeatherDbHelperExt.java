@@ -13,8 +13,8 @@ public class WeatherDbHelperExt extends  WeatherDbHelper {
         super(context);
     }
 
-    Weather getWeatherFromCursor(Cursor c) {
-        return new Weather(c.getLong(NEARBYWEATHER_ID_COLUMN_POSITION),
+    public Weather getWeatherFromCursor(Cursor c) {
+        Weather res = new Weather(c.getLong(NEARBYWEATHER_ID_COLUMN_POSITION),
                 new Date(c.getLong(NEARBYWEATHER_TIME_COLUMN_POSITION)),
                 c.getDouble(NEARBYWEATHER_WINDSPEED_COLUMN_POSITION),
                 c.getDouble(NEARBYWEATHER_WINDDEGREE_COLUMN_POSITION),
@@ -23,10 +23,14 @@ public class WeatherDbHelperExt extends  WeatherDbHelper {
                 c.getDouble(NEARBYWEATHER_LATITUDE_COLUMN_POSITION),
                 c.getDouble(NEARBYWEATHER_LONGITUDE_COLUMN_POSITION),
                 c.getInt(NEARBYWEATHER_WEATHERENUM_COLUMN_POSITION));
+        if (isFavouriteWeatherFromCursor(c)) {
+            res.setFavourite(true);
+        }
+        return res;
     }
 
-    boolean isFavouriteWeatherFromCursor(Cursor c) {
-        return !c.isNull(FAVORITEWEATHER_WEATHERENUM_COLUMN_POSITION + 1);
+    public boolean isFavouriteWeatherFromCursor(Cursor c) {
+        return !c.isNull(FAVORITEWEATHER_ID_COLUMN_POSITION + 1);
     }
 
     public WeatherResults getLastNearbyWeather() {

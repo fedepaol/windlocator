@@ -15,6 +15,7 @@ public class Weather implements Parcelable {
     double  longitude;
     int     weatherEnum;
     long    id;
+    boolean favourite;
 
     public Weather(long id,
                    Date time,
@@ -47,6 +48,7 @@ public class Weather implements Parcelable {
         this.latitude = p.readDouble();
         this.longitude = p.readDouble();
         this.weatherEnum = p.readInt();
+        this.favourite = p.readByte() != 0;
     }
 
     public Date getTime() {
@@ -85,6 +87,14 @@ public class Weather implements Parcelable {
         return id;
     }
 
+    public boolean isFavourite() {
+        return favourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        this.favourite = favourite;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -101,6 +111,7 @@ public class Weather implements Parcelable {
         parcel.writeDouble(latitude);
         parcel.writeDouble(longitude);
         parcel.writeInt(weatherEnum);
+        parcel.writeByte((byte) (favourite ? 1 : 0));
     }
 
     public static final Parcelable.Creator<Weather> CREATOR

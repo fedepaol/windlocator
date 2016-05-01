@@ -3,6 +3,7 @@ package com.whiterabbit.windlocator;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
+import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.storage.WeatherDbHelperExt;
 
 import org.junit.Before;
@@ -16,6 +17,7 @@ import org.robolectric.annotation.Config;
 import java.util.Date;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 /**
  * Created by fedepaol on 27/04/16.
@@ -42,5 +44,11 @@ public class DatabaseTest {
         c.moveToFirst();
         mDbHelper.close();
 
+        Weather w = mDbHelper.getWeatherFromCursor(c);
+        assertEquals(w.getCityName(), "Pisa");
+        assertFalse(w.isFavourite());
+
     }
+
+
 }

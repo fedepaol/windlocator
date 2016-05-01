@@ -107,7 +107,7 @@ public class WeatherDbHelper {
     public static final String FAVORITEWEATHER_ID_COLUMN = "id";
     public static final int FAVORITEWEATHER_ID_COLUMN_POSITION = 9;
 
-    private static final String NEARBY_QUERY  = "SELECT n.*, f." + FAVORITEWEATHER_ID_COLUMN +
+    private static final String NEARBY_QUERY  = "SELECT n.*, f." + FAVORITEWEATHER_ID_COLUMN + " as fav" +
                                                 " FROM " + NEARBYWEATHER_TABLE + " n " +
                                                 "LEFT OUTER JOIN " + FAVORITEWEATHER_TABLE + " f ON f." +
                                                 FAVORITEWEATHER_ID_COLUMN + " = n." +
@@ -188,11 +188,7 @@ public class WeatherDbHelper {
     }
 
     public Cursor getAllNearbyWeather(){
-
-
-
         return mDb.rawQuery(NEARBY_QUERY, null);
-
     }
 
     public Cursor getNearbyWeather(long rowIndex) {
