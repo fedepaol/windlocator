@@ -17,7 +17,6 @@ import com.whiterabbit.windlocator.Constants;
 import com.whiterabbit.windlocator.R;
 import com.whiterabbit.windlocator.WindLocatorApp;
 import com.whiterabbit.windlocator.model.Forecast;
-import com.whiterabbit.windlocator.model.ForecastResults;
 import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.weatherclient.WeatherCodes;
 import com.whiterabbit.windlocator.utils.WeatherElementUtils;
@@ -44,11 +43,8 @@ public class DetailFragment extends Fragment implements DetailView {
     @Bind(R.id.detail_forecasts)
     RecyclerView mNextDaysForecasts;
 
-    @Bind(R.id.detail_date)
-    TextView mTodayDate;
-
-    @Bind(R.id.detail_time)
-    TextView mTodayTime;
+    @Bind(R.id.detail_current)
+    DetailCurrentTime mCurrentTime;
 
     @Bind(R.id.detail_speed)
     TextView mWindSpeed;
@@ -61,6 +57,8 @@ public class DetailFragment extends Fragment implements DetailView {
 
     @Bind(R.id.detail_temperature)
     TextView mTemperature;
+
+    private ForecastListAdapter mAdapter;
 
     public static DetailFragment createInstance(Weather w) {
         DetailFragment res = new DetailFragment();
@@ -128,6 +126,9 @@ public class DetailFragment extends Fragment implements DetailView {
         mWeatherIcon.setImageResource(WeatherCodes.getIconFromWeatherDesc(w.getWeatherEnum()));
         mTemperature.setText(String.format("%d", (int) w.getTemperature()));
         mWeatherDesc.setText(WeatherCodes.getWeatherDescFromId(w.getWeatherEnum()));
+        mAdapter = new ForecastListAdapter(getActivity().getApplicationContext(),
+                null);
+        mNextDaysForecasts.setAdapter(mAdapter);
         Log.d("FEDE", "show weather after");
     }
 
@@ -139,15 +140,14 @@ public class DetailFragment extends Fragment implements DetailView {
         int hour = c.get(Calendar.HOUR);
         int minutes = c.get(Calendar.MINUTE);
         String dateString = String.format("Sep, %d", day); // TODO Month
-        mTodayDate.setText(dateString);
-        mTodayTime.setText(mElemUtils.timeToStringTime(today.getTime()));
+        mCurrentTime.setCurrentDate(dateString);
+        mCurrentTime.setCurrentTime(mElemUtils.timeToStringTime(today.getTime()));
     }
 
     @Override
     public void showForecasts(List<Forecast> forecasts) {
-        ForecastListAdapter adp = new ForecastListAdapter(getActivity().getApplicationContext(),
-                                                          forecasts);
-        mNextDaysForecasts.setAdapter(adp);
+        Log.d("FEDE", "updating forecast" + forecasts.get(0).getTemperature());
+        mAdapter.updateData(forecasts);
     }
 
     @Override

@@ -97,4 +97,9 @@ public class ForecastListAdapter extends RecyclerView.Adapter<ForecastListAdapte
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
     }
+
+    public void updateData(List<Forecast> newData) {
+        mDataset = newData;
+        notifyDataSetChanged();
+    }
 }
