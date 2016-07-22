@@ -2,6 +2,8 @@ package com.whiterabbit.windlocator;
 
 import android.app.Application;
 
+import com.whiterabbit.windlocator.detail.DetailModule;
+import com.whiterabbit.windlocator.detail.DetailView;
 import com.whiterabbit.windlocator.inject.ApplicationComponent;
 import com.whiterabbit.windlocator.inject.ApplicationModule;
 import com.whiterabbit.windlocator.inject.DaggerApplicationComponent;
@@ -29,5 +31,9 @@ public class WindLocatorApp extends Application {
 
     public ApplicationComponent getComponent() {
         return mComponent;
+    }
+
+    public DetailModule getDetailModule(DetailView view) {
+        return new DetailModule(view);
     }
 }

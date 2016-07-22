@@ -68,18 +68,6 @@ public class DetailFragment extends Fragment implements DetailView {
         return res;
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
-                .detectDiskReads()
-                .detectDiskWrites()
-                .detectNetwork()   // or .detectAll() for all detectable problems
-                .penaltyLog()
-                .build());
-
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -95,7 +83,7 @@ public class DetailFragment extends Fragment implements DetailView {
 
         DaggerDetailComponent.builder()
                 .applicationComponent(app.getComponent())
-                .detailModule(new DetailModule(this))
+                .detailModule(app.getDetailModule(this))
                 .build().inject(this);
 
 
