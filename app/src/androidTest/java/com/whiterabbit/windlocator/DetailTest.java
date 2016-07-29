@@ -3,6 +3,7 @@ package com.whiterabbit.windlocator;
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.annotation.UiThreadTest;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -12,17 +13,21 @@ import com.whiterabbit.windlocator.detail.DetailModule;
 import com.whiterabbit.windlocator.detail.DetailPresenter;
 import com.whiterabbit.windlocator.detail.DetailView;
 import com.whiterabbit.windlocator.model.Weather;
+import com.whiterabbit.windlocator.utils.WeatherElementUtils;
 import com.whiterabbit.windlocator.weatherclient.OpenWeatherClient;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.internal.matchers.Matches;
 
 import java.util.Date;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -57,6 +62,7 @@ public class DetailTest {
         mMockPresenter = mock(DetailPresenter.class);
 
         when(m.provideDetailView()).thenReturn(mock(DetailView.class));
+        when(m.provideElemUtils()).thenReturn(mock(WeatherElementUtils.class));
         when(m.provideDetailPresenter(any(DetailView.class), any(OpenWeatherClient.class)))
                 .thenReturn(mMockPresenter);
 
@@ -78,7 +84,10 @@ public class DetailTest {
         DetailView view = (DetailFragment) activity.getActivity().getSupportFragmentManager()
                                                     .findFragmentById(R.id.detail_fragment);
 
-        view.showWeather(mWeather);
+        activity.getActivity().runOnUiThread(() -> {
+            view.showWeather(mWeather);
+        });
+        onView(withId(R.id.detail_speed)).check(matches(withText(String.valueOf((int) windSpeed))));
 
-    }
+  }
 }
