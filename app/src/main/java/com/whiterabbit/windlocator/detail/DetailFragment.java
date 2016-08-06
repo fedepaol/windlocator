@@ -21,6 +21,7 @@ import com.whiterabbit.windlocator.model.Weather;
 import com.whiterabbit.windlocator.weatherclient.WeatherCodes;
 import com.whiterabbit.windlocator.utils.WeatherElementUtils;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -127,8 +128,11 @@ public class DetailFragment extends Fragment implements DetailView {
         int day = c.get(Calendar.DAY_OF_MONTH);
         int hour = c.get(Calendar.HOUR);
         int minutes = c.get(Calendar.MINUTE);
-        String dateString = String.format("Sep, %d", day); // TODO Month
-        mCurrentTime.setCurrentDate(dateString);
+        String monthString = getResources().getStringArray(R.array.months)[month];
+
+        SimpleDateFormat sdfDate = new SimpleDateFormat("MMM, dd",
+                                                         getResources().getConfiguration().locale);
+        mCurrentTime.setCurrentDate(sdfDate.format(today));
         mCurrentTime.setCurrentTime(mElemUtils.timeToStringTime(today.getTime()));
     }
 

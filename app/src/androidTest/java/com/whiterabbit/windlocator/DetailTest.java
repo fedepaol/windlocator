@@ -22,6 +22,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.internal.matchers.Matches;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import static android.support.test.espresso.Espresso.onView;
@@ -56,7 +57,7 @@ public class DetailTest {
 
     @Before
     public void setUp() throws Exception {
-        mTestDate = new Date();
+        mTestDate = new Date(1979, Calendar.SEPTEMBER, 28);;
         mWeather = new Weather(2, mTestDate, windSpeed, windDegree, temperature, cityName, latitude, longitude, weatherEnum);
         DetailModule m = mock(DetailModule.class);
         mMockPresenter = mock(DetailPresenter.class);
@@ -88,6 +89,8 @@ public class DetailTest {
             view.showWeather(mWeather);
         });
         onView(withId(R.id.detail_speed)).check(matches(withText(String.valueOf((int) windSpeed))));
+
+        onView(withId(R.id.detail_current_date)).check(matches(withText("Sep, 28")));
 
   }
 }
